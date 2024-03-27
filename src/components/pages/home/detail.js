@@ -25,6 +25,7 @@ export const DetailScreen = () => {
       {post ? (
         <div>
           <h2>{post.content}</h2>
+          
           {/* Hiển thị các thông tin khác của bài viết */}
         </div>
       ) : (

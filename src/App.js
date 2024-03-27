@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+
+
 import {
   BrowserRouter as Router,
   Route,
@@ -9,7 +9,7 @@ import {
   Outlet,
 } from "react-router-dom"; // Import CSS từ Bootstrap
 
-import { HomeScreen } from "./components/pages/home";
+import { HomeScreen } from "./components/pages/home/homeindex/src/index";
 import { DetailScreen } from "./components/pages/home/detail";
 
 function App() {
@@ -52,6 +52,7 @@ function App() {
   };
 
   return (
+
     <div className="container">
       <Router>
         <Routes>
@@ -62,5 +63,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
