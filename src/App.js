@@ -1,5 +1,5 @@
 import "./App.css";
-import { AdminPage } from "./components/admin";
+import { AdminPage } from "../src/components/admin/src/index.js";
 
 function App() {
   return (
