@@ -7,6 +7,7 @@ import {
   Routes,
   Navigate,
   Outlet,
+  useNavigate
 } from "react-router-dom"; // Import CSS từ Bootstrap
 
 import { HomeScreen } from "./components/pages/home";
