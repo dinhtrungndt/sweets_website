@@ -11,7 +11,7 @@ import {
 
 import { HomeScreen } from "./components/pages/home";
 import { DetailScreen } from "./components/pages/home/detail";
-
+import QRCodeGenerator from "./components/pages/login";
 function App() {
   // đọc thông tin user từ localStorage
   const getUserFromLocalStorage = () => {
@@ -57,8 +57,10 @@ function App() {
         <Routes>
           <Route path="/posts" element={<HomeScreen />} />
           <Route path="/posts/:id" element={<DetailScreen />} />
+          <Route path="QRCodeGenerator" element={< QRCodeGenerator/>} />
         </Routes>
       </Router>
+      {/* <QRCodeGenerator /> */}
     </div>
   );
 }
