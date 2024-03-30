@@ -65,7 +65,7 @@ export const HomeScreen = () => {
       console.error('Error fetching data:', error);
     }
   };
-
+// comment
   useEffect(() => {
     onGetPosts();
   }, []);
