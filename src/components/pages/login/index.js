@@ -32,7 +32,7 @@ function QRCodeGenerator() {
     console.log(device);
   };
   useEffect(() => {
-    socket.current = io('http://192.168.1.33:3001/');
+    socket.current = io('http://192.168.1.73:3001/');
     socket.current.on('connect', () => {
       console.log('Connected to server');
     });
@@ -40,15 +40,17 @@ function QRCodeGenerator() {
     // OnGetDevice()
     socket.current.on('ChangeScreen', (data) => {
       navigate('/posts');
-      console.log('ChangeScreen', data);
-    });
+      console.log('ChangeScreen', data.userId);
+    });    
     return () => {
       socket.current.disconnect();
     };
     
   }, []);
 
-  
+  useEffect (() => {
+    socket.current.emit('AddDevice', { device: encodedDateTime });
+  }, [dateTime]);
   
 
   return (

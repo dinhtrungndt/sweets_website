@@ -3,13 +3,13 @@ import axios from "axios";
 const AxiosInstance = (contentType = "application/json") => {
   const axiosInstance = axios.create({
     // baseURL: "https://sweets-nodejs.onrender.com/",
-    baseURL: "http://192.168.1.33:3001/",
+    baseURL: "http://192.168.1.73:3001/",
   });
 
   axiosInstance.interceptors.request.use(
     async (config) => {
       config.headers = {
-        Authorization: `Bearer ${""}`,
+        // Authorization: `Bearer ${""}`,
         Accept: "application/json",
         "Content-Type": contentType,
       };
