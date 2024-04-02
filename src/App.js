@@ -1,10 +1,10 @@
 import "./App.css";
-import { AdminPage } from "../src/components/admin/src/index.js";
+import { HomeScreen } from "./components/pages/home/index.js";
 
 function App() {
   return (
     <div className="App">
-      <AdminPage />
+      <HomeScreen />
     </div>
   );
 }
