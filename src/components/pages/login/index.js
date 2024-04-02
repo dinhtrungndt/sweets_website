@@ -1,37 +1,80 @@
-import React, { useState,useEffect, useRef } from 'react';
-import QRCode from 'qrcode.react';
-import { encode, decode } from 'base-64';
-import io from 'socket.io-client';
+import React, { useState, useEffect, useRef } from "react";
+import QRCode from "qrcode.react";
+import { encode, decode } from "base-64";
+import io from "socket.io-client";
+import { CreateDevice } from "../../../services/QRCode/QRCodeService";
+import { getPostsAll } from "../../../services/pages/homeServices";
+import { getDevice } from "../../../services/QRCode/QRCodeService";
+import { useNavigate } from "react-router-dom";
 function QRCodeGenerator() {
+  const navigate = useNavigate();
   const [dateTime, setDateTime] = useState(new Date());
   const socket = useRef(null);
   const handleDateTimeChange = (event) => {
     setDateTime(new Date(event.target.value));
   };
+  // Mã hóa dateTime thành Base64
+  const encodedDateTime = encode(dateTime.toISOString());
+  // test lấy danh sách bài viết
+  const OnGetPostsAll = async () => {
+    const posts = await getPostsAll();
+    console.log(posts);
+  };
+  // test thêm device
+  const OnCreateDevice = async () => {
+    const device = await CreateDevice(encodedDateTime);
+    console.log(device);
+  };
+
+  // test lấy danh sách device
+  const OnGetDevice = async () => {
+    const device = await getDevice();
+    console.log(device);
+  };
   useEffect(() => {
-    socket.current = io('http://192.168.1.33:3001/');
-    socket.current.on('connect', () => {
-      console.log('Connected to server');
+    socket.current = io("http://192.168.1.73:3001/");
+    socket.current.on("connect", () => {
+      console.log("Connected to server");
     });
-    socket.current.on('ChangeScreen', (data) => {
-      console.log('ChangeScreen', data);
+    // OnCreateDevice()
+    // OnGetDevice()
+
+    // test chuyen man hinh
+    // socket.current.on("ChangeScreen", (data) => {
+    //   // navigate("/posts");
+    //   console.log("ChangeScreen userId", data.userId);
+    //   console.log("ChangeScreen deviceid", data.deviceId);
+    //   console.log("ChangeScreen encodedDateTime", encodedDateTime);
+    //   // if (data.userId == encodedDateTime) {
+    //   //   navigate("/posts");
+    //   // }
+      
+    // });
+    socket.current.on('UpdateDevice2', (data) => {
+      console.log('UpdateDevice2', data.response);
+      if (data.response == true) {
+        navigate('/posts');
+      }
     });
     return () => {
       socket.current.disconnect();
     };
-    
   }, []);
 
-  
-  // Mã hóa dateTime thành Base64
-  const encodedDateTime = encode(dateTime.toISOString());
+  useEffect(() => {
+    socket.current.emit("AddDevice", { device: encodedDateTime });
+  }, [dateTime]);
 
   return (
     <div>
-      <input type="datetime-local" value={dateTime.toISOString().slice(0, -8)} onChange={handleDateTimeChange} />
+      <input
+        type="datetime-local"
+        value={dateTime.toISOString().slice(0, -8)}
+        onChange={handleDateTimeChange}
+      />
       {dateTime && (
         <div>
-            <h3>{encodedDateTime}</h3>
+          <h3>{encodedDateTime}</h3>
           <QRCode value={encodedDateTime} />
         </div>
       )}
