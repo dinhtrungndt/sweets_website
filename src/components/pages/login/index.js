@@ -35,6 +35,7 @@ function QRCodeGenerator() {
         if (response.status) {
           console.log('đăng nhập thành công');
           navigate('/posts');
+          alert('Đăng nhập thành công');
         }
       }
       CheckDeviceUpdate();
