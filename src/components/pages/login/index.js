@@ -1,69 +1,66 @@
 import React, { useState, useEffect, useRef } from "react";
 import QRCode from "qrcode.react";
-import { encode, decode } from "base-64";
+import { encode } from "base-64";
 import io from "socket.io-client";
-import { CreateDevice } from "../../../services/QRCode/QRCodeService";
-import { getPostsAll } from "../../../services/pages/homeServices";
-import { getDevice } from "../../../services/QRCode/QRCodeService";
+import { CreateDevice,UpdateDevice } from "../../../services/QRCode/QRCodeService";
 import { useNavigate } from "react-router-dom";
+import { Alert } from "bootstrap";
 function QRCodeGenerator() {
   const navigate = useNavigate();
   const [dateTime, setDateTime] = useState(new Date());
   const socket = useRef(null);
+  const onCreateDeviceCalled = useRef(false);
+
   const handleDateTimeChange = (event) => {
     setDateTime(new Date(event.target.value));
   };
-  // Mã hóa dateTime thành Base64
-  const encodedDateTime = encode(dateTime.toISOString());
-  // test lấy danh sách bài viết
-  const OnGetPostsAll = async () => {
-    const posts = await getPostsAll();
-    console.log(posts);
-  };
-  // test thêm device
-  const OnCreateDevice = async () => {
-    const device = await CreateDevice(encodedDateTime);
-    console.log(device);
-  };
 
-  // test lấy danh sách device
-  const OnGetDevice = async () => {
-    const device = await getDevice();
-    console.log(device);
-  };
+  const encodedDateTime = encode(dateTime.toISOString());
+
   useEffect(() => {
-    socket.current = io("http://192.168.1.73:3001/");
+    socket.current = io("http://192.168.1.68:3001/");
     socket.current.on("connect", () => {
       console.log("Connected to server");
     });
-    // OnCreateDevice()
-    // OnGetDevice()
-
-    // test chuyen man hinh
-    // socket.current.on("ChangeScreen", (data) => {
-    //   // navigate("/posts");
-    //   console.log("ChangeScreen userId", data.userId);
-    //   console.log("ChangeScreen deviceid", data.deviceId);
-    //   console.log("ChangeScreen encodedDateTime", encodedDateTime);
-    //   // if (data.userId == encodedDateTime) {
-    //   //   navigate("/posts");
-    //   // }
-      
-    // });
-    socket.current.on('UpdateDevice2', (data) => {
-      console.log('UpdateDevice2', data.response);
-      if (data.response == true) {
-        navigate('/posts');
+    socket.current.on('send_device_iduser2', (data) => {
+      console.log('>>>>>>>>>> data.iduser : ', data.iduser);
+      console.log('>>>>>>>>>> data.deviceid : ', data.deviceid);
+      console.log('>>>>>>>>>> encodedDateTime : ', encodedDateTime);
+      if (data.deviceid !== encodedDateTime) {
+        return;
       }
+      const CheckDeviceUpdate = async () => {
+        const response = await UpdateDevice(data.iduser,data.deviceid);
+        // console.log('>>>>>>>>>> response : ', response);
+        if (response.status) {
+          console.log('đăng nhập thành công');
+          navigate('/posts');
+        }
+      }
+      CheckDeviceUpdate();
     });
+    if (!onCreateDeviceCalled.current) {
+      OnCreateDevice();
+      onCreateDeviceCalled.current = true;
+    }
+
     return () => {
       socket.current.disconnect();
     };
   }, []);
 
-  useEffect(() => {
-    socket.current.emit("AddDevice", { device: encodedDateTime });
-  }, [dateTime]);
+  const OnCreateDevice = async () => {
+    const device = await CreateDevice(encodedDateTime);
+    console.log(device);
+  };
+  const CheckDeviceUpdate = async (iduser,deviceid) => {
+    const response = await UpdateDevice(iduser,deviceid);
+    // console.log('>>>>>>>>>> response : ', response);
+    if (response.status) {
+      console.log('đăng nhập thành công');
+    }
+    return response;
+  }
 
   return (
     <div>
