@@ -97,7 +97,7 @@
 
 .post-description {
     padding-bottom: 10px;
-    margin-left: 10px;
+   
     color: black;
 }
 
@@ -108,7 +108,6 @@
 }
 
 .post-description-heart {
-    margin-left: 10px;
     margin-bottom: 20px;
     color: black;
 }
@@ -166,14 +165,52 @@
 }
 
 .postitemdetail {
-    width: 50%;
+    width: 70%;
     margin-left: 25%;
     margin-bottom: 20px;
     height: 100%;
+    
 
 
 }
-
+.comments-section {
+    margin-top: 20px;
+  }
+  
+  .comment {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .comment-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .comment-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .comment-content {
+    margin-left: 10px;
+  }
+  
+  .comment-username {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .comment-text {
+    color: #333;
+  }
+  
+  .right-side::-webkit-scrollbar {
+    display: none; /* Ẩn thanh cuộn */
+  }
 @keyframes spin {
     to {
         transform: rotate(360deg);
@@ -192,10 +229,10 @@
 
     .left-side {
         position: fixed;
-        bottom: 10px;
-        left: 0;
+        bottom: 0;
+       
         width: 100%;
-        height: 60px;
+        height: 40px;
         /* Điều chỉnh chiều cao của bottom tab */
         background-color: white;
         display: flex;
@@ -222,12 +259,11 @@
 
     .icon {
         font-size: 24px;
+        margin-bottom: 30px;
     }
 
     .txttrangchu {
-        font-size: 12px;
-        color: grey;
-        margin-top: 5px;
+       display: none;
     }
 
     .right-side {

@@ -96,6 +96,9 @@ export const HomeScreen1 = () => {
       </div>
     );
   };
+  const handleIndex = () => {
+    window.location.href = "/posts";
+  };
 
   const PostItem = ({ posts }) => {
    
@@ -131,7 +134,7 @@ export const HomeScreen1 = () => {
     <div className="container">
       <div className="left-side">
         <div className="textlogo">Sweet</div>
-        <div className="item1" onClick={search}>
+        <div className="item1" onClick={handleIndex}>
           <HomeFilled className="icon" />
           <div className="txttrangchu">
             Trang chủ
