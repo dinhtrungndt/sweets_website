@@ -122,7 +122,7 @@
 .time {
     color: grey;
     font-size: 12px;
-    margin-left: 10px;
+    margin-top: 5px;
 }
 
 .chuyentaikhoan {
@@ -165,6 +165,15 @@
     font-size: 25px;
 }
 
+.postitemdetail {
+    width: 50%;
+    margin-left: 25%;
+    margin-bottom: 20px;
+    height: 100%;
+
+
+}
+
 @keyframes spin {
     to {
         transform: rotate(360deg);
@@ -172,6 +181,15 @@
 }
 
 @media only screen and (max-width: 900px) {
+    .postitemdetail {
+        width: 80%;
+        margin-left: 10%;
+        margin-bottom: 20px;
+        height: 100%;
+
+
+    }
+
     .left-side {
         position: fixed;
         bottom: 10px;

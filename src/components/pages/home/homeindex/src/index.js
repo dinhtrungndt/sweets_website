@@ -6,7 +6,7 @@ import avatar from "../../../../../assets/khanhphan.jpg";
 import { getMedia } from "../../../../../services/pages/homeServices";
 import { SearchOutlined, HomeFilled, BellFilled, UserOutlined, HeartOutlined, RedditCircleFilled, LoadingOutlined, CommentOutlined } from '@ant-design/icons';
 import moment from 'moment';
-export const HomeScreen = () => {
+export const HomeScreen1 = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true); // Sử dụng state để theo dõi trạng thái loading
 
@@ -83,6 +83,7 @@ export const HomeScreen = () => {
       date: "12/12/2000",
     },
   ]
+  
 
   const Friend = ({ friend }) => {
     return (
@@ -97,13 +98,17 @@ export const HomeScreen = () => {
   };
 
   const PostItem = ({ posts }) => {
+   
     return (
       <div className="post-item">
         <div className="post-header">
           <img src={posts.idUsers?.avatar} alt="Avatar" className="avatar" />
-          <div className="username">{posts.idUsers?.name}</div>
-          <div className="time">{formatTime(posts.createAt)}</div>
+          <div>
+            <div className="username">{posts.idUsers?.name}</div>
+            <div className="time">{formatTime(posts.createAt)}</div>
+          </div>
         </div>
+        
         <div className="post-description">{posts.content}</div>
         {
           posts.media.map((item, index) => (
@@ -111,11 +116,11 @@ export const HomeScreen = () => {
           ))
         }
         <HeartOutlined className="iconheart" />
-        <Link key={posts._id} to={`/posts/${posts._id}`}>
+        <Link key={posts._id} to={`/posts/test`}>
           <CommentOutlined className="iconheart" />
         </Link>
         <div className="post-description-heart">{posts.reaction.length} Cảm xúc</div>
-        <Link key={posts._id} to={`/posts/${posts._id}`}>
+        <Link key={posts._id} to={`/posts/test`}>
           <div className="post-description-heart">Xem {posts.comment.length} Bình luận</div>
         </Link>
       </div>
