@@ -3,7 +3,7 @@ import axios from "axios";
 const AxiosInstance = (contentType = "application/json") => {
   const axiosInstance = axios.create({
     // baseURL: "https://sweets-nodejs.onrender.com/",
-    baseURL: "http://192.168.1.73:3001/",
+    baseURL: "http://192.168.1.68:3001/",
   });
 
   axiosInstance.interceptors.request.use(
