@@ -1,0 +1,208 @@
+.leftlogin {
+    width: 50%;
+    height: 100%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    align-items: center;
+   
+}
+
+.rightlogin {
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    border-right: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+
+.itemlogin {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 #22b6c0;
+    background-color: white;
+
+}
+.itemregister {
+    width: 80%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 #22b6c0;
+    background-color: white;
+
+}
+
+.containerlogin {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ 
+}
+
+.qrcode {
+    width: 400px;
+    height: 400px;
+}
+
+.txtwelcome {
+    font-size: 30px;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 30px;
+
+}
+.email1{
+    margin-left: 5%;
+     text-align: left;
+     margin-top: 10%;
+ 
+ }
+.email{
+   margin-left: 5%;
+    text-align: left;
+    margin-top: 20px;
+
+}
+.txtcontent{
+    font-size: 20px;
+    color: black;
+    text-align: center;
+    margin-top: 10px;
+}
+.inputemail{
+    width: 80%;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #22b6c0;
+    margin-top: 20px;
+    padding-left: 10px;
+    font-size: 20px;
+    margin-top: 3px;
+}
+.forgotpass{
+    font-size: 15px;
+    color: #22b6c0;
+    text-align: left;
+    margin-top: 10px;
+    margin-left: 5%;
+    margin-bottom: 5px;
+    
+}
+.btnlogin{
+    margin-left: 5%;
+    width: 76%;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #22b6c0;
+    color: white;
+    font-size: 20px;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.txtloginqr {
+    margin-top: 40px;
+    font-size: 30px;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+
+}
+.txtqr{
+    font-size: 20px;
+    color: grey;
+    text-align: center;
+    margin-top: 5px;
+}
+.QRCodeContainer {
+    transform: scale(1.5); /* Thay đổi kích thước QRCode */
+}
+.logo{
+    width: 40px;
+    height: 40px;
+    margin-top: 30px;
+    margin-left: 7px;
+}
+.logoitem{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.Registeritem{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.eye{
+    width: 40px;
+    height: 40px;
+    margin-top: 10px;
+    margin-left: -40px;
+    position: absolute;
+
+}
+
+@media only screen and (max-width: 900px) {
+    .itemregister {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        box-shadow: 0 0 10px 0 #22b6c0;
+        background-color: white;
+        overflow-y: auto;
+    
+        
+    }
+    .itemregister {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        box-shadow: 0 0 10px 0 #22b6c0;
+        background-color: white;
+    
+    }
+    .inputemail{
+        width: 100%;
+        height: 50px;
+        border-radius: 10px;
+        border: 1px solid #22b6c0;
+        margin-top: 20px;
+        padding-left: 10px;
+        font-size: 20px;
+        margin-top: 3px;
+    }
+    .rightlogin{
+        display: none;
+    }
+    .itemlogin{
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+
+    }
+}
