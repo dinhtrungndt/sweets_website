@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import QRCode from "qrcode.react";
 import { encode } from "base-64";
 import io from "socket.io-client";
-import { CreateDevice,UpdateDevice } from "../../../services/QRCode/QRCodeService";
+import { CreateDevice, UpdateDevice } from "../../../services/QRCode/QRCodeService";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "bootstrap";
+
 function QRCodeGenerator() {
   const navigate = useNavigate();
   const [dateTime, setDateTime] = useState(new Date());
@@ -18,7 +19,7 @@ function QRCodeGenerator() {
   const encodedDateTime = encode(dateTime.toISOString());
 
   useEffect(() => {
-    socket.current = io("http://192.168.1.68:3001/");
+    socket.current = io("http://192.168.1.45:3001/");
     socket.current.on("connect", () => {
       console.log("Connected to server");
     });
@@ -30,10 +31,10 @@ function QRCodeGenerator() {
         return;
       }
       const CheckDeviceUpdate = async () => {
-        const response = await UpdateDevice(data.iduser,data.deviceid);
-        // console.log('>>>>>>>>>> response : ', response);
+        const response = await UpdateDevice(data.iduser, data.deviceid);
         if (response.status) {
           console.log('đăng nhập thành công');
+          localStorage.setItem('iduser', data.iduser); // Lưu iduser vào LocalStorage
           navigate('/posts');
           alert('Đăng nhập thành công');
         }
@@ -54,11 +55,12 @@ function QRCodeGenerator() {
     const device = await CreateDevice(encodedDateTime);
     console.log(device);
   };
-  const CheckDeviceUpdate = async (iduser,deviceid) => {
-    const response = await UpdateDevice(iduser,deviceid);
-    // console.log('>>>>>>>>>> response : ', response);
+
+  const CheckDeviceUpdate = async (iduser, deviceid) => {
+    const response = await UpdateDevice(iduser, deviceid);
     if (response.status) {
       console.log('đăng nhập thành công');
+      localStorage.setItem('iduser', iduser); // Lưu iduser vào LocalStorage
     }
     return response;
   }
