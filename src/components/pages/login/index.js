@@ -40,6 +40,7 @@ function QRCodeGenerator() {
       }
       const CheckDeviceUpdate = async () => {
         const response = await UpdateDevice(data.iduser, data.deviceid);
+        console.log("đăng nhập thành công");
         if (response.status) {
           console.log("đăng nhập thành công");
           localStorage.setItem("iduser", data.iduser); // Lưu iduser vào LocalStorage
