@@ -24,7 +24,7 @@ function QRCodeGenerator() {
   const encodedDateTime = encode(dateTime.toISOString());
 
   useEffect(() => {
-    socket.current = io("http://192.168.1.45:3001/");
+    socket.current = io("https://sweets-nodejs.onrender.com/");
     socket.current.on("connect", () => {
       console.log("Connected to server");
     });
