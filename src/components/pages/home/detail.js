@@ -51,6 +51,8 @@ export const DetailScreen = () => {
     try {
       setIsLoading(true);
       const res = await getPostsDetail(id);
+      console.log(">>>>>>>>>>>>> resresres", res);
+
       const postsWithMedia = await Promise.all(
         res.map(async (post) => {
           const mediaResponse = await getMedia(post._id);
@@ -118,6 +120,8 @@ export const DetailScreen = () => {
       // setImage('');
       setParentUserName(null);
       setIsLoading(false);
+      await reloadComments();
+      await onGetPosts();
     } catch (error) {
       console.error("Lỗi khi gửi comment:", error);
     } finally {
