@@ -99,6 +99,8 @@
 
 .iconheart {
   padding: 10px;
+  padding-left: 20px;
+  padding-right: 7px;
   color: black;
   font-size: 20px;
   cursor: pointer;
@@ -111,6 +113,14 @@
 .post-description-heart {
   margin-bottom: 20px;
   color: black;
+  text-decoration: none;
+}
+
+.label-seenComments {
+  color: rgb(79, 79, 79);
+  font-size: 12px;
+  margin-top: 5px;
+  text-decoration: none;
 }
 
 .right-side-footer {
@@ -213,6 +223,12 @@
 .child-comment {
   margin-left: 20px;
   font-size: 0.8em;
+}
+
+.flex_reactions {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .right-side::-webkit-scrollbar {
@@ -340,4 +356,10 @@
   left: 0px;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
+}
+
+.text-CS {
+  color: black;
+  font-size: 15px;
+  cursor: pointer;
 }

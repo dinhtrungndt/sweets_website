@@ -29,20 +29,20 @@ function QRCodeGenerator() {
   useEffect(() => {
     socket.current = io("https://sweets-nodejs.onrender.com/");
     socket.current.on("connect", () => {
-      console.log("Connected to server");
+      // console.log("Connected to server");
     });
     socket.current.on("send_device_iduser2", (data) => {
-      console.log(">>>>>>>>>> data.iduser : ", data.iduser);
-      console.log(">>>>>>>>>> data.deviceid : ", data.deviceid);
-      console.log(">>>>>>>>>> encodedDateTime : ", encodedDateTime);
+      // console.log(">>>>>>>>>> data.iduser : ", data.iduser);
+      // console.log(">>>>>>>>>> data.deviceid : ", data.deviceid);
+      // console.log(">>>>>>>>>> encodedDateTime : ", encodedDateTime);
       if (data.deviceid !== encodedDateTime) {
         return;
       }
       const CheckDeviceUpdate = async () => {
         const response = await UpdateDevice(data.iduser, data.deviceid);
-        console.log("đăng nhập thành công");
+        // console.log("đăng nhập thành công");
         if (response.status) {
-          console.log("đăng nhập thành công");
+          // console.log("đăng nhập thành công");
           localStorage.setItem("iduser", data.iduser); // Lưu iduser vào LocalStorage
           navigate("/posts");
           alert("Đăng nhập thành công");
@@ -62,13 +62,13 @@ function QRCodeGenerator() {
 
   const OnCreateDevice = async () => {
     const device = await CreateDevice(encodedDateTime);
-    console.log(device);
+    // console.log(device);
   };
 
   const CheckDeviceUpdate = async (iduser, deviceid) => {
     const response = await UpdateDevice(iduser, deviceid);
     if (response.status) {
-      console.log("đăng nhập thành công");
+      // console.log("đăng nhập thành công");
       localStorage.setItem("iduser", iduser); // Lưu iduser vào LocalStorage
     }
     return response;

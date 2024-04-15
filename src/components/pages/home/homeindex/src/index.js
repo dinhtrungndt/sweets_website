@@ -24,8 +24,13 @@ import {
   RedditCircleFilled,
   LoadingOutlined,
   CommentOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
+import { IoIosShareAlt } from "react-icons/io";
+import { RiShareForwardLine } from "react-icons/ri";
+import { AiOutlineLike } from "react-icons/ai";
+
 export const HomeScreen1 = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true); // Sử dụng state để theo dõi trạng thái loading
@@ -96,7 +101,7 @@ export const HomeScreen1 = () => {
   const filteredPosts = posts.filter(
     (post) => post.idTypePosts.name === "Bài viết"
   );
-  console.log(">>>>>>>>>>>>>>> filteredPosts", filteredPosts);
+  // console.log(">>>>>>>>>>>>>>> filteredPosts", filteredPosts);
 
   const handleLike = async (idPosts) => {
     try {
@@ -183,7 +188,7 @@ export const HomeScreen1 = () => {
     );
   };
   const handleIndex = () => {
-    window.location.href = "/posts";
+    window.location.href = "/";
   };
 
   const PostItem = ({ posts }) => {
@@ -193,6 +198,12 @@ export const HomeScreen1 = () => {
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
+    };
+
+    const handleShare = (idPosts) => {
+      const url = `https://sweets-nodejs.onrender.com/posts/detail/${idPosts}`;
+      navigator.clipboard.writeText(url);
+      alert("Đã sao chép đường dẫn bài viết");
     };
 
     return (
@@ -208,14 +219,17 @@ export const HomeScreen1 = () => {
             </div>
           </div>
         </div>
-
+        {/* {console.log(">>>>>>>>>>>>>>> posts", posts)} */}
         <div className="post-description">{posts.content}</div>
         {posts.media.length === 1 ? (
           <>
             {posts.media.map((media, index) => (
-              <div key={media._id}>
+              <div key={index}>
                 {media.type === "image" ? (
-                  <img src={media.url.join()} className="posts" />
+                  <>
+                    {console.log(">>>>>>>>>.. meddiiaiiii ", media)}
+                    <img src={media.url.join()} className="posts" />
+                  </>
                 ) : (
                   <ReactPlayer
                     url={media.url.join()}
@@ -233,7 +247,7 @@ export const HomeScreen1 = () => {
         ) : (
           <Slider {...settings}>
             {posts.media.map((media, index) => (
-              <div key={media._id}>
+              <div key={index}>
                 {media.type === "image" ? (
                   <img src={media.url.join()} className="posts" />
                 ) : (
@@ -251,24 +265,40 @@ export const HomeScreen1 = () => {
             ))}
           </Slider>
         )}
-        <HeartOutlined
-          className={posts.liked ? "iconheart liked" : "iconheart"}
-          onClick={() => handleLike(posts._id)}
-        />
-
-        <Link key={posts._id} to={`/posts/detail/${posts._id}`}>
-          <CommentOutlined className="iconheart" />
-        </Link>
-        <div className="post-description-heart">
-          {posts.reaction.length} Cảm xúc
+        <div className="flex_reactions">
+          <AiOutlineLike
+            className={posts.liked ? "iconheart liked" : "iconheart"}
+            onClick={() => handleLike(posts._id)}
+          />
+          <p>{posts.reaction.length}</p>
+          <div className="flex_reactions">
+            <Link key={posts._id} to={`/posts/detail/${posts._id}`}>
+              <CommentOutlined className="iconheart" />
+            </Link>
+            <p className="text-CS">Bình luận</p>
+          </div>
+          <div
+            className="flex_reactions"
+            onClick={() => handleShare(posts._id)}
+          >
+            <RiShareForwardLine className="iconheart" />
+            <p className="text-CS">Chia sẻ</p>
+          </div>
         </div>
         <Link key={posts._id} to={`/posts/detail/${posts._id}`}>
           <div className="post-description-heart">
-            Xem {posts.comment.length} Bình luận
+            <p className="label-seenComments">
+              Xem {posts.comment.length} Bình luận
+            </p>
           </div>
         </Link>
       </div>
     );
+  };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("iduser");
+    window.location.href = "/signin";
   };
 
   return (
@@ -294,6 +324,11 @@ export const HomeScreen1 = () => {
         <div className="item1" onClick={search}>
           <UserOutlined className="icon" />
           <div className="txttrangchu">Trang cá nhân</div>
+        </div>
+        {/* Đăng xuất */}
+        <div className="item1" onClick={handleLogOut}>
+          <LogoutOutlined className="icon" />
+          <div className="txttrangchu">Đăng xuất</div>
         </div>
       </div>
       <div className="right-side">

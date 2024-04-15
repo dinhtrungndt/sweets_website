@@ -51,7 +51,7 @@ export const DetailScreen = () => {
     try {
       setIsLoading(true);
       const res = await getPostsDetail(id);
-      console.log(">>>>>>>>>>>>> resresres", res);
+      // console.log(">>>>>>>>>>>>> resresres", res);
 
       const postsWithMedia = await Promise.all(
         res.map(async (post) => {
@@ -84,7 +84,7 @@ export const DetailScreen = () => {
   const reloadComments = async () => {
     try {
       const response = await getComments(postID);
-      console.log("Thành công khi tải danh sách bình luận:", response);
+      // console.log("Thành công khi tải danh sách bình luận:", response);
       setComments(response.reverse());
     } catch (error) {
       console.error("Lỗi khi tải danh sách bình luận:", error);
