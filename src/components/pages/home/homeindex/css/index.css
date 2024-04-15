@@ -1,343 +1,283 @@
 .container {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  height: 100vh;
-  background-color: white;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    height: 100vh;
+    background-color: white;
 }
 
 .left-side {
-  width: 17%;
-  margin-left: 2%;
-  height: 100%;
-  border-right: 0.01px solid rgb(214, 214, 214);
+    width: 17%;
+    margin-left: 2%;
+    height: 100%;
+    border-right: 0.01px solid rgb(214, 214, 214);
+
 }
 
 .right-side {
-  background-color: white;
-  margin-right: 20px;
-  width: 80%;
-  overflow-y: auto;
+    background-color: white;
+    margin-right: 20px;
+    width: 80%;
+    overflow-y: auto;
 }
 
-.textlogo {
-  font-size: 30px;
-  font-weight: bold;
-  color: black;
 
-  margin-top: 20px;
+.textlogo {
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+
+    margin-top: 20px;
 }
 
 .txttrangchu {
-  font-size: 15;
-  font-weight: 600;
-  color: black;
-  text-align: center;
-  margin-left: 15px;
+    font-size: 15;
+    font-weight: 600;
+    color: black;
+    text-align: center;
+    margin-left: 15px;
 }
 
 .item1 {
-  display: flex;
-  margin-top: 30px;
+    display: flex;
+    margin-top: 30px;
+
 }
 
 .list-view {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-  width: 70%;
-  float: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 70%;
+    float: left;
 }
 
 .post-item {
-  width: 80%;
-  max-width: 600px;
-  margin-bottom: 20px;
-  border-bottom: 0.01px solid rgb(214, 214, 214);
-  background-color: white;
+    width: 80%;
+    max-width: 600px;
+    margin-bottom: 20px;
+    border-bottom: 0.01px solid rgb(214, 214, 214);
+    background-color: white;
 }
 
 .post-header {
-  display: flex;
-  align-items: center;
-  padding: 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
 }
 
 .post-header1 {
-  display: flex;
-  padding: 10px;
-  border-radius: 0.01px solid grey;
+    display: flex;
+    padding: 10px;
+    border-radius: 0.01px solid grey;
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
 .username {
-  font-weight: bold;
-  color: black;
+    font-weight: bold;
+    color: black;
 }
 
 .username1 {
-  color: grey;
+
+    color: grey;
 }
 
 .post-image {
-  margin-top: 10px;
-  width: 100%;
+    margin-top: 10px;
+    width: 100%;
 }
 
 .post-description {
-  padding-bottom: 10px;
-
-  color: black;
+    padding-bottom: 10px;
+   
+    color: black;
 }
 
 .iconheart {
-  padding: 10px;
-  color: black;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.iconheart.liked {
-  color: red;
+    padding: 10px;
+    color: black;
+    font-size: 20px;
 }
 
 .post-description-heart {
-  margin-bottom: 20px;
-  color: black;
+    margin-bottom: 20px;
+    color: black;
 }
 
 .right-side-footer {
-  width: 30%;
-  float: right;
-  margin-top: 20px;
+    width: 30%;
+    float: right;
+    margin-top: 20px;
 }
 
 .time {
-  color: grey;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.object {
-  color: grey;
-  font-size: 12px;
-  margin-top: 5px;
-  margin-left: 5px;
+    color: grey;
+    font-size: 12px;
+    margin-top: 5px;
 }
 
 .chuyentaikhoan {
-  color: blue;
-  font-size: 12px;
-  margin-left: 10px;
+    color: blue;
+    font-size: 12px;
+    margin-left: 10px;
 }
 
 .friend {
-  color: grey;
-  font-size: 15px;
-  padding: 10px;
-  font-weight: bold;
+    color: grey;
+    font-size: 15px;
+    padding: 10px;
+    font-weight: bold;
 }
 
 .list-view-friend {
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
 }
 
 .loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #22b6c0;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #1890ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 
-  width: 100px;
-  height: 100px;
+    width: 100px;
+    height: 100px;
+
 }
 
 .icon {
-  color: black;
-  font-size: 25px;
+    color: black;
+    font-size: 25px;
 }
 
 .postitemdetail {
-  width: 70%;
-  margin-left: 25%;
-  margin-bottom: 20px;
-  height: 100%;
+    width: 70%;
+    margin-left: 25%;
+    margin-bottom: 20px;
+    height: 100%;
+    
+
+
 }
 .comments-section {
-  margin-top: 20px;
-}
-
-.comment {
-  display: flex;
-  margin-bottom: 15px;
-}
-
-.comment-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.comment-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.comment-content {
-  margin-left: 10px;
-}
-
-.comment-username {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.comment-text {
-  color: #333;
-}
-
-.child-comment {
-  margin-left: 20px;
-  font-size: 0.8em;
-}
-
-.right-side::-webkit-scrollbar {
-  display: none; /* Ẩn thanh cuộn */
-}
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+    margin-top: 20px;
   }
+  
+  .comment {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .comment-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .comment-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .comment-content {
+    margin-left: 10px;
+  }
+  
+  .comment-username {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .comment-text {
+    color: #333;
+  }
+  
+  .right-side::-webkit-scrollbar {
+    display: none; /* Ẩn thanh cuộn */
+  }
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @media only screen and (max-width: 900px) {
-  .postitemdetail {
-    width: 80%;
-    margin-left: 10%;
-    margin-bottom: 20px;
-    height: 100%;
-  }
+    .postitemdetail {
+        width: 80%;
+        margin-left: 10%;
+        margin-bottom: 20px;
+        height: 100%;
 
-  .left-side {
-    position: fixed;
-    bottom: 0;
 
-    width: 100%;
-    height: 40px;
-    /* Điều chỉnh chiều cao của bottom tab */
-    background-color: white;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-top: 1px solid #ddd;
+    }
 
-    /* Thêm đường viền trên cùng */
-  }
+    .left-side {
+        position: fixed;
+        bottom: 0;
+       
+        width: 100%;
+        height: 40px;
+        /* Điều chỉnh chiều cao của bottom tab */
+        background-color: white;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-top: 1px solid #ddd;
 
-  .textlogo {
-    display: none;
-    /* Ẩn textlogo để không hiển thị trên bottom tab */
-  }
+        /* Thêm đường viền trên cùng */
+    }
 
-  .item1 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    cursor: pointer;
-  }
+    .textlogo {
+        display: none;
+        /* Ẩn textlogo để không hiển thị trên bottom tab */
+    }
 
-  .icon {
-    font-size: 24px;
-    margin-bottom: 30px;
-  }
+    .item1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        cursor: pointer;
+    }
 
-  .txttrangchu {
-    display: none;
-  }
+    .icon {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
 
-  .right-side {
-    width: 100%;
-  }
+    .txttrangchu {
+       display: none;
+    }
 
-  .list-view {
-    width: 100%;
-  }
+    .right-side {
+        width: 100%;
 
-  .right-side-footer {
-    width: 100%;
-    display: none;
-  }
-}
+    }
 
-.new-comment-container {
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-}
+    .list-view {
+        width: 100%;
+    }
 
-.new-comment-input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  margin-right: 10px;
-}
+    .right-side-footer {
+        width: 100%;
+        display: none;
+    }
 
-.submit-comment-button {
-  background-color: #22b6c0;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.submit-comment-button:hover {
-  background-color: #0b828a;
-}
-
-.comment-phanhoi {
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-}
-
-.comment-phanhoi:hover {
-  background-color: #22b6c0;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.parentUserName {
-  background-color: #22b6c0;
-  padding: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-  color: #fff;
-  left: 0px;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
 }

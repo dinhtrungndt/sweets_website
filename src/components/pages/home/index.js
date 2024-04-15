@@ -87,38 +87,37 @@ export const HomeScreen = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+  useEffect(() => {
+    onGetPosts();
+  }, []);
 
   const filteredPosts = posts.filter(
     (post) => post.idTypePosts.name === "Bài viết"
   );
 
-  // console.log(">>>>>>>>>>>>> filteredPosts", filteredPosts);
-
   useEffect(() => {
     onGetPosts();
   }, []);
 
-  const PostItem = ({ postData }) => {
-    // console.log(">>>>>>>>>>>>> postData", postData);
+  const PostItem = ({ post }) => {
+    console.log(">>>>>>>>>>>>> sss", post);
     return (
       <div className="post-item">
         <div className="post-header">
-          <img src={postData.idUsers?.avatar} alt="Avatar" className="avatar" />
+          <img src={post.idUsers?.avatar} alt="Avatar" className="avatar" />
           <div>
-            <div className="username">{postData.idUsers?.name}</div>
-            <div className="time">{formatTime(postData.createAt)}</div>
+            <div className="username">{post.idUsers?.name}</div>
+            <div className="time">{formatTime(post.createAt)}</div>
           </div>
         </div>
-        <div className="post-description">{postData?.content}</div>
-        {postData.media.length > 0 ? (
+        <div className="post-description">{post?.content}</div>
+        {post.media.length > 0 ? (
           <div className="container_media">
             <Slider {...settings}>
-              {postData.media?.map((media, index) => (
+              {post.media?.map((media, index) => (
                 <div key={media._id}>
                   {media.type === "image" ? (
-                    <>
-                      <img src={media.url.join()} className="posts" />
-                    </>
+                    <img src={media.url.join()} className="posts" />
                   ) : (
                     <ReactPlayer
                       url={media.url.join()}
@@ -130,6 +129,11 @@ export const HomeScreen = () => {
                       className="posts"
                     />
                   )}
+                  <div className="imageCountContainer">
+                    <p className="imageCountText">
+                      {index + 1}/{post.media.length}
+                    </p>
+                  </div>
                 </div>
               ))}
             </Slider>
@@ -140,7 +144,7 @@ export const HomeScreen = () => {
         <div className="iconheart-like">
           <HeartOutlined className="iconheart" />
           <div className="post-description-heart">
-            {postData?.reaction.length} lượt thích
+            {post?.reaction.length} lượt thích
           </div>
         </div>
       </div>
@@ -201,8 +205,8 @@ export const HomeScreen = () => {
       </div>
       <div className="right-side">
         <div className="list-view">
-          {filteredPosts.map((item, index) => (
-            <PostItem key={index} postData={item} />
+          {filteredPosts.map((post, index) => (
+            <PostItem key={index} post={post} />
           ))}
         </div>
         <div className="right-side-footer">

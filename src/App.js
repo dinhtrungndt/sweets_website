@@ -7,7 +7,7 @@ import {
   Routes,
   Navigate,
   Outlet,
-  useNavigate,
+  useNavigate
 } from "react-router-dom"; // Import CSS từ Bootstrap
 
 import { HomeScreen } from "./components/pages/home";
@@ -59,10 +59,11 @@ function App() {
     <div className="container">
       <Router>
         <Routes>
-          <Route path="/" element={<QRCodeGenerator />} />
+           <Route path="/" element={< QRCodeGenerator/>} />
           <Route path="/posts" element={<HomeScreen1 />} />
-          <Route path="/posts/detail/:id" element={<DetailScreen />} />
+          <Route path="/posts/test" element={<DetailScreen />} />
           <Route path="/register" element={<Register />} />
+         
         </Routes>
       </Router>
       {/* <QRCodeGenerator /> */}
