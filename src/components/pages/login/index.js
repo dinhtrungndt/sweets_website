@@ -27,6 +27,7 @@ function QRCodeGenerator() {
     setDateTime(new Date(event.target.value));
   };
   const encodedDateTime = encode(dateTime.toISOString());
+  // đăng nhập ở đây
   const onLogin = async () => {
     const response = await login(email, password);
     if (response.status) {

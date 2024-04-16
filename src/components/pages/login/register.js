@@ -13,17 +13,6 @@ import Icon from "@ant-design/icons/lib/components/Icon";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import "./index.css";
 import { register } from "../../../services/users/userServices";
-const data = 
-{
-  name: "John Doe",
-  email: "johndoe@example.com",
-  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-  password: "hashedpassword",
-  gender: "male",
-  date: "1990-01-01",
-  avatar: "https://example.com/avatar.jpg",
-  coverImage: "https://example.com/cover.jpg"
-}
 function Register() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
