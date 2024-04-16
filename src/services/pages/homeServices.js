@@ -16,8 +16,9 @@ export const getPostsAll = async () => {
 export const getPostsDetail = async (_id) => {
   try {
     const response = await AxiosInstance().get(`/posts/get-detail-post/${_id}`);
-    // console.log('get post >>>>>>>>>>>>>>> Service GetPosts 8 ', response);
-    return response;
+    const res = [response];
+    // console.log("get post >>>>>>>>>>>>>>> Service GetPosts 8 ", res);
+    return res;
   } catch (error) {
     console.error(" >>>>>>>>> Error fetching posts: 11 s", error);
     throw error;

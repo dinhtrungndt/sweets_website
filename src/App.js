@@ -7,7 +7,7 @@ import {
   Routes,
   Navigate,
   Outlet,
-  useNavigate
+  useNavigate,
 } from "react-router-dom"; // Import CSS từ Bootstrap
 
 import { HomeScreen } from "./components/pages/home";
@@ -19,7 +19,7 @@ import Register from "./components/pages/login/register";
 function App() {
   // đọc thông tin user từ localStorage
   const getUserFromLocalStorage = () => {
-    const userString = localStorage.getItem("user");
+    const userString = localStorage.getItem("iduser");
     if (userString) {
       return JSON.parse(userString);
     }
@@ -29,11 +29,11 @@ function App() {
   // lưu thông tin user vào localStorage
   const saveUserToLocalStorage = (userInfo) => {
     if (!userInfo) {
-      localStorage.removeItem("user");
+      localStorage.removeItem("iduser");
       setUser(null);
       return;
     }
-    localStorage.setItem("user", JSON.stringify(userInfo));
+    localStorage.setItem("iduser", JSON.stringify(userInfo));
     setUser(userInfo);
   };
 
@@ -59,11 +59,10 @@ function App() {
     <div className="container">
       <Router>
         <Routes>
-           <Route path="/" element={< QRCodeGenerator/>} />
+          <Route path="/signin" element={<QRCodeGenerator />} />
           <Route path="/posts" element={<HomeScreen1 />} />
-          <Route path="/posts/test" element={<DetailScreen />} />
+          <Route path="/posts/detail/:id" element={<DetailScreen />} />
           <Route path="/register" element={<Register />} />
-         
         </Routes>
       </Router>
       {/* <QRCodeGenerator /> */}
