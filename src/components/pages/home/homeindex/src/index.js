@@ -30,11 +30,24 @@ import moment from "moment";
 import { IoIosShareAlt } from "react-icons/io";
 import { RiShareForwardLine } from "react-icons/ri";
 import { AiOutlineLike } from "react-icons/ai";
+// import { StoryPage } from "../../story";
 
-export const HomeScreen1 = () => {
+export const HomeScreen1 = (props) => {
+  const { userId } = props;
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true); // Sử dụng state để theo dõi trạng thái loading
-  const user = localStorage.getItem("iduser");
+  const [loading, setLoading] = useState(true);
+  // const userString = localStorage.getItem("iduser");
+  // const user = JSON.parse(userString);
+
+  const getUserFromLocalStorage = () => {
+    const userString = localStorage.getItem("iduser");
+    if (userString) {
+      return JSON.parse(userString);
+    }
+    return null;
+  };
+
+  const user = getUserFromLocalStorage();
 
   const search = () => {
     alert("Chức năng đang được phát triển");
@@ -62,7 +75,7 @@ export const HomeScreen1 = () => {
   };
   const onGetPosts = async () => {
     try {
-      const res = await getPosts(user);
+      const res = await getPosts(user._id);
       const postsWithMedia = await Promise.all(
         res.map(async (post) => {
           const mediaResponse = await getMedia(post._id);
@@ -101,11 +114,16 @@ export const HomeScreen1 = () => {
   const filteredPosts = posts.filter(
     (post) => post.idTypePosts.name === "Bài viết"
   );
-  // console.log(">>>>>>>>>>>>>>> filteredPosts", filteredPosts);
+
+  const filteredStori = posts.filter(
+    (post) => post.idTypePosts.name === "Story"
+  );
+
+  // console.log(">>>>>>>>>>>>>>> filteredPosts", filteredStori);
 
   const handleLike = async (idPosts) => {
     try {
-      const idUsers = user;
+      const idUsers = user._id;
       const type = "Thích";
       const response = await likeByPost(idUsers, idPosts, type);
 
@@ -127,13 +145,14 @@ export const HomeScreen1 = () => {
           }
           return post;
         });
-        console.log("Like bài viết thành công:", updatedPosts);
+        // console.log("Like bài viết thành công:", updatedPosts);
         setPosts(updatedPosts);
 
         // Lưu trạng thái liked vào localStorage
         updatedPosts.forEach((post) => {
           localStorage.setItem(`liked_${post._id}`, post.liked);
         });
+        await onGetPosts();
       } else {
         console.error("Lỗi khi thay đổi trạng thái like:", response.message);
       }
@@ -227,7 +246,6 @@ export const HomeScreen1 = () => {
               <div key={index}>
                 {media.type === "image" ? (
                   <>
-                    {console.log(">>>>>>>>>.. meddiiaiiii ", media)}
                     <img src={media.url.join()} className="posts" />
                   </>
                 ) : (
@@ -332,12 +350,13 @@ export const HomeScreen1 = () => {
         </div>
       </div>
       <div className="right-side">
-        {loading ? ( // Kiểm tra trạng thái loading để hiển thị nút xoay xoay
+        {loading ? (
           <div className="list-view">
             <LoadingOutlined className="loading" />
           </div>
         ) : (
           <>
+            {/* <StoryPage userId={userId} story={filteredStori} /> */}
             <div className="list-view">
               {filteredPosts.map((item, index) => (
                 <PostItem key={index} posts={item} />

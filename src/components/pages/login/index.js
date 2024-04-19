@@ -15,7 +15,8 @@ import "./index.css";
 import Icon from "@ant-design/icons/lib/components/Icon";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import { login } from "../../../services/users/userServices";
-function QRCodeGenerator() {
+function QRCodeGenerator(props) {
+  const { saveUser } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -33,9 +34,13 @@ function QRCodeGenerator() {
     if (response.status) {
       console.log("đăng nhập thành công");
       localStorage.setItem("iduser", response.id);
-      navigate("/posts");
+      if (response.user) {
+        saveUser(response.user);
+      } else {
+        alert("Email or password is incorrect");
+      }
       alert("Đăng nhập thành công");
-    }else{
+    } else {
       alert("Đăng nhập thất bại");
     }
   };
@@ -56,7 +61,7 @@ function QRCodeGenerator() {
         const response = await UpdateDevice(data.iduser, data.deviceid);
         if (response.status) {
           console.log("đăng nhập thành công");
-          localStorage.setItem("iduser", data.iduser); // Lưu iduser vào LocalStorage
+          // localStorage.setItem("iduser", data.iduser); // Lưu iduser vào LocalStorage
           navigate("/posts");
           alert("Đăng nhập thành công");
         }

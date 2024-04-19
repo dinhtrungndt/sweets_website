@@ -39,7 +39,6 @@ function App() {
 
   const [user, setUser] = useState(getUserFromLocalStorage);
 
-  // những component cần phải đăng nhập mới được truy cập
   const ProtectedRoute = () => {
     if (user) {
       return <Outlet />;
@@ -59,10 +58,20 @@ function App() {
     <div className="container">
       <Router>
         <Routes>
-          <Route path="/signin" element={<QRCodeGenerator />} />
-          <Route path="/posts" element={<HomeScreen1 />} />
-          <Route path="/posts/detail/:id" element={<DetailScreen />} />
+          <Route element={<PublicRoute />}>
+            <Route
+              path="/signin"
+              element={<QRCodeGenerator saveUser={saveUserToLocalStorage} />}
+            />
+          </Route>
           <Route path="/register" element={<Register />} />
+          <Route element={<ProtectedRoute />}>
+            <Route
+              path="/"
+              element={<HomeScreen1 userId={user ? user.id : null} />}
+            />
+            <Route path="/posts/detail/:id" element={<DetailScreen />} />
+          </Route>
         </Routes>
       </Router>
       {/* <QRCodeGenerator /> */}
