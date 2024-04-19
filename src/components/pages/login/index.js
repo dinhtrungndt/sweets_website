@@ -14,7 +14,10 @@ import logone from "../../../assets/logo.png";
 import "./index.css";
 import Icon from "@ant-design/icons/lib/components/Icon";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import { login } from "../../../services/users/userServices";
 function QRCodeGenerator() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [dateTime, setDateTime] = useState(new Date());
   const socket = useRef(null);
@@ -23,26 +26,36 @@ function QRCodeGenerator() {
   const handleDateTimeChange = (event) => {
     setDateTime(new Date(event.target.value));
   };
-
   const encodedDateTime = encode(dateTime.toISOString());
+  // đăng nhập ở đây
+  const onLogin = async () => {
+    const response = await login(email, password);
+    if (response.status) {
+      console.log("đăng nhập thành công");
+      localStorage.setItem("iduser", response.id);
+      navigate("/posts");
+      alert("Đăng nhập thành công");
+    }else{
+      alert("Đăng nhập thất bại");
+    }
+  };
 
   useEffect(() => {
     socket.current = io("https://sweets-nodejs.onrender.com/");
     socket.current.on("connect", () => {
-      // console.log("Connected to server");
+      console.log("Connected to server");
     });
     socket.current.on("send_device_iduser2", (data) => {
-      // console.log(">>>>>>>>>> data.iduser : ", data.iduser);
-      // console.log(">>>>>>>>>> data.deviceid : ", data.deviceid);
-      // console.log(">>>>>>>>>> encodedDateTime : ", encodedDateTime);
+      console.log(">>>>>>>>>> data.iduser : ", data.iduser);
+      console.log(">>>>>>>>>> data.deviceid : ", data.deviceid);
+      console.log(">>>>>>>>>> encodedDateTime : ", encodedDateTime);
       if (data.deviceid !== encodedDateTime) {
         return;
       }
       const CheckDeviceUpdate = async () => {
         const response = await UpdateDevice(data.iduser, data.deviceid);
-        // console.log("đăng nhập thành công");
         if (response.status) {
-          // console.log("đăng nhập thành công");
+          console.log("đăng nhập thành công");
           localStorage.setItem("iduser", data.iduser); // Lưu iduser vào LocalStorage
           navigate("/posts");
           alert("Đăng nhập thành công");
@@ -62,13 +75,13 @@ function QRCodeGenerator() {
 
   const OnCreateDevice = async () => {
     const device = await CreateDevice(encodedDateTime);
-    // console.log(device);
+    console.log(device);
   };
 
   const CheckDeviceUpdate = async (iduser, deviceid) => {
     const response = await UpdateDevice(iduser, deviceid);
     if (response.status) {
-      // console.log("đăng nhập thành công");
+      console.log("đăng nhập thành công");
       localStorage.setItem("iduser", iduser); // Lưu iduser vào LocalStorage
     }
     return response;
@@ -90,13 +103,19 @@ function QRCodeGenerator() {
           </div>
           <div className="email1">
             <div>Nhập tài khoản Email</div>
-            <Input className="inputemail" />
+            <Input
+              className="inputemail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div className="email">
             <div>Nhập mật khẩu</div>
             <Input
               type={showPassword ? "text" : "password"}
               className="inputemail"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             {showPassword ? (
               <EyeOutlined className="eye" onClick={togglePasswordVisibility} />
@@ -108,7 +127,15 @@ function QRCodeGenerator() {
             )}
           </div>
           <div className="forgotpass">Quên mật khẩu?</div>
-          <Button className="btnlogin">Đăng nhập</Button>
+          <Button
+            className="btnlogin"
+            onClick={() => {
+              onLogin(email, password);
+              console.log("click");
+            }}
+          >
+            Đăng nhập
+          </Button>
           <Link to={`/register`}>
             <div className="forgotpass">Đăng ký tài khoản</div>
           </Link>
