@@ -30,7 +30,13 @@ import moment from "moment";
 import { IoIosShareAlt } from "react-icons/io";
 import { RiShareForwardLine } from "react-icons/ri";
 import { AiOutlineLike } from "react-icons/ai";
-// import { StoryPage } from "../../story";
+import StoryPage from "../../story";
+import toast, { toastConfig } from "react-simple-toasts";
+import "react-simple-toasts/dist/theme/dark.css";
+import { FaFacebookMessenger } from "react-icons/fa";
+import { Modal } from "antd";
+import { ChatPage } from "./chat";
+import { ChatPageIn } from "./chat/ChatPageIn";
 
 export const HomeScreen1 = (props) => {
   const { userId } = props;
@@ -48,9 +54,9 @@ export const HomeScreen1 = (props) => {
   };
 
   const user = getUserFromLocalStorage();
-
+  toastConfig({ theme: "dark" });
   const search = () => {
-    alert("Chức năng đang được phát triển");
+    toast("Chức năng đang được phát triển !!!", "success", "top-right", 3000);
   };
   const formatTime = (createdAt) => {
     const currentTime = moment();
@@ -222,7 +228,6 @@ export const HomeScreen1 = (props) => {
     const handleShare = (idPosts) => {
       const url = `https://sweets-nodejs.onrender.com/posts/detail/${idPosts}`;
       navigator.clipboard.writeText(url);
-      alert("Đã sao chép đường dẫn bài viết");
     };
 
     return (
@@ -289,15 +294,26 @@ export const HomeScreen1 = (props) => {
             onClick={() => handleLike(posts._id)}
           />
           <p>{posts.reaction.length}</p>
-          <div className="flex_reactions">
-            <Link key={posts._id} to={`/posts/detail/${posts._id}`}>
+          <Link
+            key={posts._id}
+            to={`/posts/detail/${posts._id}`}
+            className="flex_reactionsLink"
+          >
+            <div className="flex_reactions">
               <CommentOutlined className="iconheart" />
-            </Link>
-            <p className="text-CS">Bình luận</p>
-          </div>
+              <p className="text-CS">Bình luận</p>
+            </div>
+          </Link>
           <div
             className="flex_reactions"
-            onClick={() => handleShare(posts._id)}
+            onClick={() =>
+              toast(
+                "Sao chép link thành công! 🎉✨💖",
+                "success",
+                "top-right",
+                3000
+              )
+            }
           >
             <RiShareForwardLine className="iconheart" />
             <p className="text-CS">Chia sẻ</p>
@@ -319,6 +335,16 @@ export const HomeScreen1 = (props) => {
     window.location.href = "/signin";
   };
 
+  const [openModelMess, setOpenModelMess] = useState(false);
+  const [friendInbox, setFriendInbox] = useState(null);
+
+  const handleOk = () => {
+    setOpenModelMess(false);
+  };
+  const handleCancel = () => {
+    setOpenModelMess(false);
+  };
+
   return (
     <div className="container">
       <div className="left-side">
@@ -334,10 +360,6 @@ export const HomeScreen1 = (props) => {
         <div className="item1" onClick={search}>
           <BellFilled className="icon" />
           <div className="txttrangchu">Thông báo</div>
-        </div>
-        <div className="item1" onClick={search}>
-          <RedditCircleFilled className="icon" />
-          <div className="txttrangchu">Story</div>
         </div>
         <div className="item1" onClick={search}>
           <UserOutlined className="icon" />
@@ -356,8 +378,8 @@ export const HomeScreen1 = (props) => {
           </div>
         ) : (
           <>
-            {/* <StoryPage userId={userId} story={filteredStori} /> */}
             <div className="list-view">
+              <StoryPage user={user} story={filteredStori} />
               {filteredPosts.map((item, index) => (
                 <PostItem key={index} posts={item} />
               ))}
@@ -381,6 +403,27 @@ export const HomeScreen1 = (props) => {
           </>
         )}
       </div>
+      <div className="floating-button" onClick={() => setOpenModelMess(true)}>
+        <FaFacebookMessenger className="icon-floating-button" />
+      </div>
+      {friendInbox === null ? <></> : <ChatPageIn friendInbox={friendInbox} />}
+      <>
+        <Modal
+          open={openModelMess}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          closeIcon={null}
+          centered
+          footer={[<div key="back"></div>]}
+        >
+          <ChatPage
+            cancel={() => setOpenModelMess(false)}
+            friend={(idFriend) => {
+              setFriendInbox(idFriend);
+            }}
+          />
+        </Modal>
+      </>
     </div>
   );
 };

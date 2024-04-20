@@ -33,10 +33,17 @@ import {
   CommentOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
+import { Button } from "antd";
 export const DetailScreen = () => {
   const { id } = useParams();
-
-  const user = localStorage.getItem("iduser");
+  const getUserFromLocalStorage = () => {
+    const userString = localStorage.getItem("iduser");
+    if (userString) {
+      return JSON.parse(userString);
+    }
+    return null;
+  };
+  const user = getUserFromLocalStorage();
   const [post, setPost] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   // const [loading, setLoading] = useState(true);
@@ -97,19 +104,18 @@ export const DetailScreen = () => {
         return alert("Vui lòng nhập nội dung !");
       }
 
-      setIsLoading(true);
       if (parentId && parentUserName !== null) {
         await submitCommentsC(
-          user,
+          user._id,
           postID,
           parentId,
           commentContent,
           // imagePath,
-          parentUserName
+          parentUserName._id
         );
       } else {
         await submitComments(
-          user,
+          user._id,
           postID,
           commentContent
           // imagePath,
@@ -147,11 +153,7 @@ export const DetailScreen = () => {
   };
 
   const renderComments = (comment) => {
-    return isLoading ? (
-      <div className="list-view">
-        <LoadingOutlined className="loading" />
-      </div>
-    ) : (
+    return (
       <>
         {comment.map((comment, index) => (
           <div
@@ -173,12 +175,9 @@ export const DetailScreen = () => {
               <div className="comment-text">{comment.content}</div>
               {comment.idParent === null ? (
                 <>
-                  {/* {console.log(">>>>>>>> }}>Phản hồi</div> )", comment._id)} */}
                   <div
                     className="comment-phanhoi"
-                    onClick={() =>
-                      handleReply(comment?._id, comment?.idUsers.name)
-                    }
+                    onClick={() => handleReply(comment?._id, comment?.idUsers)}
                   >
                     Phản hồi
                   </div>
@@ -365,13 +364,16 @@ export const DetailScreen = () => {
                 </div>
                 <div className="new-comment-container">
                   {parentUserName !== null ? (
-                    <p className="parentUserName">{parentUserName}</p>
+                    <div className="onClick-parent">
+                      <Button onClick={() => setParentUserName(null)}>X</Button>
+                      <p className="parentUserName">{parentUserName.name}</p>
+                    </div>
                   ) : null}
                   <input
                     type="text"
                     ref={commentInputRef}
                     onChange={(event) => setCommentContent(event.target.value)}
-                    placeholder={`Bình luận dưới tên ${user}`}
+                    placeholder={`Bình luận dưới tên ${user.name}`}
                     className="new-comment-input"
                   />
 

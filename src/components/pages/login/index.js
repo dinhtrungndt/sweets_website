@@ -15,6 +15,9 @@ import "./index.css";
 import Icon from "@ant-design/icons/lib/components/Icon";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import { login } from "../../../services/users/userServices";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function QRCodeGenerator(props) {
   const { saveUser } = props;
   const [email, setEmail] = useState("");
@@ -39,7 +42,16 @@ function QRCodeGenerator(props) {
       } else {
         alert("Email or password is incorrect");
       }
-      alert("Đăng nhập thành công");
+      // Toast thông báo đăng nhập thành công
+      toast.success("Đăng nhập thành công", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } else {
       alert("Đăng nhập thất bại");
     }
@@ -62,8 +74,17 @@ function QRCodeGenerator(props) {
         if (response.status) {
           console.log("đăng nhập thành công");
           // localStorage.setItem("iduser", data.iduser); // Lưu iduser vào LocalStorage
-          navigate("/posts");
-          alert("Đăng nhập thành công");
+          navigate("/");
+          // Toast thông báo đăng nhập thành công
+          toast.success("Đăng nhập thành công", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         }
       };
       CheckDeviceUpdate();
@@ -156,6 +177,7 @@ function QRCodeGenerator(props) {
           <div className="txtqr">để quét mã QR để đăng nhập</div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

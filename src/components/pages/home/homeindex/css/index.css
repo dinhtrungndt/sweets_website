@@ -224,7 +224,9 @@
   margin-left: 20px;
   font-size: 0.8em;
 }
-
+.flex_reactionsLink {
+  text-decoration: none;
+}
 .flex_reactions {
   display: flex;
   align-items: center;
@@ -347,6 +349,11 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
+.onClick-parent {
+  display: flex;
+  align-items: center;
+}
 .parentUserName {
   background-color: #22b6c0;
   padding: 5px;
@@ -354,12 +361,32 @@
   padding-right: 10px;
   color: #fff;
   left: 0px;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
 }
 
 .text-CS {
   color: black;
   font-size: 15px;
   cursor: pointer;
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 50px;
+  right: 100px;
+  background-color: #22b6c0;
+  color: white;
+  padding: 20px;
+  border-radius: 100%;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.floating-button:hover {
+  background-color: #0b828a;
+}
+
+.icon-floating-button {
+  font-size: 30px;
 }

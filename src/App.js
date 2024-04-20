@@ -15,6 +15,8 @@ import { DetailScreen } from "./components/pages/home/detail";
 import QRCodeGenerator from "./components/pages/login";
 import { HomeScreen1 } from "./components/pages/home/homeindex/src";
 import Register from "./components/pages/login/register";
+import { ShowStory } from "./components/pages/home/story/showStory";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   // đọc thông tin user từ localStorage
@@ -71,10 +73,12 @@ function App() {
               element={<HomeScreen1 userId={user ? user.id : null} />}
             />
             <Route path="/posts/detail/:id" element={<DetailScreen />} />
+            <Route path="/showStory" element={<ShowStory />} />
           </Route>
         </Routes>
       </Router>
       {/* <QRCodeGenerator /> */}
+      <ToastContainer />
     </div>
   );
 }
