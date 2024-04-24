@@ -36,12 +36,15 @@ function QRCodeGenerator(props) {
     const response = await login(email, password);
     if (response.status) {
       console.log("đăng nhập thành công");
-      localStorage.setItem("iduser", response.id);
-      if (response.user) {
-        saveUser(response.user);
-      } else {
-        alert("Email or password is incorrect");
-      }
+      const dataUser = JSON.stringify(response.id);
+      JSON.parse(dataUser);
+      localStorage.setItem("iduser", dataUser);
+      navigate("/posts");
+      // if (response.user) {
+      //   saveUser(response.user);
+      // } else {
+      //   alert("Email or password is incorrect");
+      // }
       // Toast thông báo đăng nhập thành công
       toast.success("Đăng nhập thành công", {
         position: "top-right",
@@ -72,9 +75,11 @@ function QRCodeGenerator(props) {
       const CheckDeviceUpdate = async () => {
         const response = await UpdateDevice(data.iduser, data.deviceid);
         if (response.status) {
-          console.log("đăng nhập thành công");
-          // localStorage.setItem("iduser", data.iduser); // Lưu iduser vào LocalStorage
-          navigate("/");
+          console.log("đăng nhập thành côngdata.iduser", data.iduser);
+          const dataUser = JSON.stringify(data.iduser);
+          JSON.parse(dataUser);
+          localStorage.setItem("iduser", dataUser);
+          navigate("/posts");
           // Toast thông báo đăng nhập thành công
           toast.success("Đăng nhập thành công", {
             position: "top-right",

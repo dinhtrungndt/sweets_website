@@ -60,7 +60,7 @@ function App() {
     <div className="container">
       <Router>
         <Routes>
-          <Route element={<PublicRoute />}>
+          {/* <Route element={<PublicRoute />}>
             <Route
               path="/signin"
               element={<QRCodeGenerator saveUser={saveUserToLocalStorage} />}
@@ -74,7 +74,11 @@ function App() {
             />
             <Route path="/posts/detail/:id" element={<DetailScreen />} />
             <Route path="/showStory" element={<ShowStory />} />
-          </Route>
+          </Route> */}
+          <Route path="/" element={<QRCodeGenerator />} />
+          <Route path="/posts" element={<HomeScreen1 />} />
+          <Route path="/posts/detail/:id" element={<DetailScreen />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
       {/* <QRCodeGenerator /> */}

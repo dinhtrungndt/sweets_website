@@ -20,7 +20,7 @@ export const getPostsDetail = async (_id) => {
     // console.log("get post >>>>>>>>>>>>>>> Service GetPosts 8 ", res);
     return res;
   } catch (error) {
-    console.error(" >>>>>>>>> Error fetching posts: 11 s", error);
+    console.error(" >>>>>>>>> Error getPostsDetail posts: 11 s", error);
     throw error;
   }
 };

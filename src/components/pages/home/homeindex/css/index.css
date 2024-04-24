@@ -224,6 +224,11 @@
   margin-left: 20px;
   font-size: 0.8em;
 }
+
+.child-comment-container {
+  margin-left: 20px;
+}
+
 .flex_reactionsLink {
   text-decoration: none;
 }
@@ -389,4 +394,13 @@
 
 .icon-floating-button {
   font-size: 30px;
+}
+
+.flex_reactionsLink {
+  text-decoration: none;
+}
+.flex_reactions {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
 }

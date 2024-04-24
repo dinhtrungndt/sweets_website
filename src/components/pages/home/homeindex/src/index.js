@@ -39,21 +39,23 @@ import { ChatPage } from "./chat";
 import { ChatPageIn } from "./chat/ChatPageIn";
 
 export const HomeScreen1 = (props) => {
-  const { userId } = props;
+  // const { userId } = props;
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const userString = localStorage.getItem("iduser");
-  // const user = JSON.parse(userString);
+  const userString = localStorage.getItem("iduser");
+  const user = JSON.parse(userString);
 
-  const getUserFromLocalStorage = () => {
-    const userString = localStorage.getItem("iduser");
-    if (userString) {
-      return JSON.parse(userString);
-    }
-    return null;
-  };
+  // console.log(">>>>>>>>>>>>>>> user", user);
 
-  const user = getUserFromLocalStorage();
+  // const getUserFromLocalStorage = () => {
+  //   const userString = localStorage.getItem("iduser");
+  //   if (userString) {
+  //     return JSON.parse(userString);
+  //   }
+  //   return null;
+  // };
+
+  // const user = getUserFromLocalStorage();
   toastConfig({ theme: "dark" });
   const search = () => {
     toast("Chức năng đang được phát triển !!!", "success", "top-right", 3000);
@@ -81,7 +83,7 @@ export const HomeScreen1 = (props) => {
   };
   const onGetPosts = async () => {
     try {
-      const res = await getPosts(user._id);
+      const res = await getPosts(user);
       const postsWithMedia = await Promise.all(
         res.map(async (post) => {
           const mediaResponse = await getMedia(post._id);
@@ -95,8 +97,7 @@ export const HomeScreen1 = (props) => {
 
           const liked = reaction.some(
             (reactionItem) =>
-              reactionItem.idUsers._id === user.id &&
-              reactionItem.type === "Thích"
+              reactionItem.idUsers._id === user && reactionItem.type === "Thích"
           );
 
           return {
@@ -129,7 +130,7 @@ export const HomeScreen1 = (props) => {
 
   const handleLike = async (idPosts) => {
     try {
-      const idUsers = user._id;
+      const idUsers = user;
       const type = "Thích";
       const response = await likeByPost(idUsers, idPosts, type);
 
@@ -138,7 +139,7 @@ export const HomeScreen1 = (props) => {
           if (post._id === idPosts) {
             const updatedLiked = !post.liked;
             const updatedReaction = post.reaction.map((reactionItem) => {
-              if (reactionItem.idUsers._id === user.id) {
+              if (reactionItem.idUsers._id === user) {
                 return { ...reactionItem, type: "Thích" };
               }
               return reactionItem;
@@ -191,7 +192,7 @@ export const HomeScreen1 = (props) => {
   const friend = [
     {
       avatar: avatar,
-      username: "Nguyễn Hữu Dũng",
+      username: "Mang Tuấn Vĩ",
       date: "12/12/2000",
     },
     {
@@ -213,7 +214,7 @@ export const HomeScreen1 = (props) => {
     );
   };
   const handleIndex = () => {
-    window.location.href = "/";
+    window.location.href = "/posts";
   };
 
   const PostItem = ({ posts }) => {
@@ -226,8 +227,9 @@ export const HomeScreen1 = (props) => {
     };
 
     const handleShare = (idPosts) => {
-      const url = `https://sweets-nodejs.onrender.com/posts/detail/${idPosts}`;
+      const url = `https://sweets-liart.vercel.app/posts/detail/${idPosts}`;
       navigator.clipboard.writeText(url);
+      toast("Sao chép link thành công! 🎉✨💖", "success", "top-right", 3000);
     };
 
     return (
@@ -306,14 +308,7 @@ export const HomeScreen1 = (props) => {
           </Link>
           <div
             className="flex_reactions"
-            onClick={() =>
-              toast(
-                "Sao chép link thành công! 🎉✨💖",
-                "success",
-                "top-right",
-                3000
-              )
-            }
+            onClick={() => handleShare(posts._id)}
           >
             <RiShareForwardLine className="iconheart" />
             <p className="text-CS">Chia sẻ</p>
@@ -332,7 +327,7 @@ export const HomeScreen1 = (props) => {
 
   const handleLogOut = () => {
     localStorage.removeItem("iduser");
-    window.location.href = "/signin";
+    window.location.href = "/";
   };
 
   const [openModelMess, setOpenModelMess] = useState(false);

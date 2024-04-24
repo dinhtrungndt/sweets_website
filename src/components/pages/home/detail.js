@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   getPostsDetail,
+  likeByPost,
   submitComments,
   submitCommentsC,
 } from "../../../services/pages/homeServices";
@@ -31,19 +32,27 @@ import {
   RedditCircleFilled,
   LoadingOutlined,
   CommentOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
 import { Button } from "antd";
+import { AiOutlineLike } from "react-icons/ai";
+import { RiShareForwardLine } from "react-icons/ri";
+import toast, { toastConfig } from "react-simple-toasts";
+import "react-simple-toasts/dist/theme/dark.css";
+
 export const DetailScreen = () => {
   const { id } = useParams();
-  const getUserFromLocalStorage = () => {
-    const userString = localStorage.getItem("iduser");
-    if (userString) {
-      return JSON.parse(userString);
-    }
-    return null;
-  };
-  const user = getUserFromLocalStorage();
+  // const getUserFromLocalStorage = () => {
+  //   const userString = localStorage.getItem("iduser");
+  //   if (userString) {
+  //     return JSON.parse(userString);
+  //   }
+  //   return null;
+  // };
+  // const user = getUserFromLocalStorage();
+  const userString = localStorage.getItem("iduser");
+  const user = JSON.parse(userString);
   const [post, setPost] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   // const [loading, setLoading] = useState(true);
@@ -53,6 +62,7 @@ export const DetailScreen = () => {
   const [parentUserName, setParentUserName] = useState(null);
   const postID = post.map((post) => post._id).join();
   const commentInputRef = useRef(null);
+  // console.log(">>>>>>>>>>>>>>> postID", id);
 
   const onGetPosts = async () => {
     try {
@@ -90,9 +100,9 @@ export const DetailScreen = () => {
 
   const reloadComments = async () => {
     try {
-      const response = await getComments(postID);
+      const response = await getComments(id);
       // console.log("Thành công khi tải danh sách bình luận:", response);
-      setComments(response.reverse());
+      setComments(response);
     } catch (error) {
       console.error("Lỗi khi tải danh sách bình luận:", error);
     }
@@ -106,7 +116,7 @@ export const DetailScreen = () => {
 
       if (parentId && parentUserName !== null) {
         await submitCommentsC(
-          user._id,
+          user,
           postID,
           parentId,
           commentContent,
@@ -115,7 +125,7 @@ export const DetailScreen = () => {
         );
       } else {
         await submitComments(
-          user._id,
+          user,
           postID,
           commentContent
           // imagePath,
@@ -143,9 +153,9 @@ export const DetailScreen = () => {
     onGetPosts();
   }, []);
 
-  // useEffect(() => {
-  //   reloadComments();
-  // }, [postID]);
+  useEffect(() => {
+    reloadComments();
+  }, []);
 
   const handleReply = (id, name) => {
     setParentId(id);
@@ -169,7 +179,7 @@ export const DetailScreen = () => {
               <div style={{ display: "flex", alignItems: "center" }}>
                 <div className="username">{comment.idUsers.name}</div>
                 <div style={{ paddingLeft: 10, fontSize: 14 }}>
-                  {formatTime(comment.createAt)}
+                  {formatTime(comment.createAt)}{" "}
                 </div>
               </div>
               <div className="comment-text">{comment.content}</div>
@@ -185,9 +195,7 @@ export const DetailScreen = () => {
               ) : (
                 <div
                   className="comment-phanhoi"
-                  onClick={() =>
-                    handleReply(comment?._id, comment?.idUsers.name)
-                  }
+                  onClick={() => handleReply(comment?._id, comment?.idUsers)}
                 >
                   Phản hồi
                 </div>
@@ -222,14 +230,10 @@ export const DetailScreen = () => {
     }
   };
 
-  const handleIndex = () => {
-    window.location.href = "/posts";
-  };
-
   const friend = [
     {
       avatar: avatar,
-      username: "Nguyễn Hữu Dũng",
+      username: "Mang Tuấn Vĩ",
       date: "12/12/2000",
     },
     {
@@ -262,6 +266,55 @@ export const DetailScreen = () => {
     slidesToScroll: 1,
   };
 
+  const handleIndex = () => {
+    window.location.href = "/posts";
+  };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("iduser");
+    window.location.href = "/";
+  };
+
+  const handleLike = async (idPosts) => {
+    try {
+      const idUsers = user;
+      const type = "Thích";
+      const response = await likeByPost(idUsers, idPosts, type);
+
+      if (response.status === 1) {
+        const updatedPosts = post.map((post) => {
+          if (post._id === idPosts) {
+            const updatedLiked = !post.liked;
+            const updatedReaction = post.reaction.map((reactionItem) => {
+              if (reactionItem.idUsers._id === user) {
+                return { ...reactionItem, type: "Thích" };
+              }
+              return reactionItem;
+            });
+            return {
+              ...post,
+              reaction: updatedReaction,
+              liked: updatedLiked,
+            };
+          }
+          return post;
+        });
+        // console.log("Like bài viết thành công:", updatedPosts);
+        setPost(updatedPosts);
+
+        // Lưu trạng thái liked vào localStorage
+        updatedPosts.forEach((post) => {
+          localStorage.setItem(`liked_${post._id}`, post.liked);
+        });
+        await onGetPosts();
+      } else {
+        console.error("Lỗi khi thay đổi trạng thái like:", response.message);
+      }
+    } catch (error) {
+      console.error("Lỗi khi gửi yêu cầu API:", error);
+    }
+  };
+
   return (
     <>
       {post.map((post, index) => {
@@ -282,12 +335,13 @@ export const DetailScreen = () => {
                 <div className="txttrangchu">Thông báo</div>
               </div>
               <div className="item1" onClick={search}>
-                <RedditCircleFilled className="icon" />
-                <div className="txttrangchu">Story</div>
-              </div>
-              <div className="item1" onClick={search}>
                 <UserOutlined className="icon" />
                 <div className="txttrangchu">Trang cá nhân</div>
+              </div>
+              {/* Đăng xuất */}
+              <div className="item1" onClick={handleLogOut}>
+                <LogoutOutlined className="icon" />
+                <div className="txttrangchu">Đăng xuất</div>
               </div>
             </div>
             <div className="right-side">
@@ -351,9 +405,36 @@ export const DetailScreen = () => {
                     ))}
                   </Slider>
                 )}
-                <HeartOutlined className="iconheart" />
-                <div className="post-description-heart">
-                  {post.reaction.length} Cảm xúc
+                <div className="flex_reactions">
+                  <AiOutlineLike
+                    className={post.liked ? "iconheart liked" : "iconheart"}
+                    onClick={() => handleLike(post._id)}
+                  />
+                  <p>{post.reaction.length}</p>
+                  <Link
+                    key={post._id}
+                    to={`/posts/detail/${post._id}`}
+                    className="flex_reactionsLink"
+                  >
+                    <div className="flex_reactions">
+                      <CommentOutlined className="iconheart" />
+                      <p className="text-CS">Bình luận</p>
+                    </div>
+                  </Link>
+                  <div
+                    className="flex_reactions"
+                    onClick={() =>
+                      toast(
+                        "Sao chép link thành công! 🎉✨💖",
+                        "success",
+                        "top-right",
+                        3000
+                      )
+                    }
+                  >
+                    <RiShareForwardLine className="iconheart" />
+                    <p className="text-CS">Chia sẻ</p>
+                  </div>
                 </div>
                 <div className="comments-section">
                   <div>
@@ -373,7 +454,7 @@ export const DetailScreen = () => {
                     type="text"
                     ref={commentInputRef}
                     onChange={(event) => setCommentContent(event.target.value)}
-                    placeholder={`Bình luận dưới tên ${user.name}`}
+                    placeholder={`Bình luận`}
                     className="new-comment-input"
                   />
 
