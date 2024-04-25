@@ -7,6 +7,7 @@ import { GetMessageSR } from "../../../../../../services/pages/chatService";
 import io from "socket.io-client";
 import { getUserByID } from "../../../../../../services/pages/userServices";
 import moment from "moment";
+import { GoDash } from "react-icons/go";
 
 export const ChatPageIn = ({ friendInbox }) => {
   const userString = localStorage.getItem("iduser");
@@ -17,6 +18,7 @@ export const ChatPageIn = ({ friendInbox }) => {
   const [loadingMore, setLoadingMore] = useState(false);
   const messagesEndRef = useRef(null);
   const socket = useRef(null);
+  const [isExpanded, setIsExpanded] = useState(false);
   // console.log("friendInbox", friendInbox);
 
   const onGetByUserId = async () => {
@@ -93,7 +95,7 @@ export const ChatPageIn = ({ friendInbox }) => {
     const diffInSeconds = currentTime.diff(postTime, "seconds");
 
     if (diffInSeconds < 1) {
-      return "Vừa đăng";
+      return "Vừa gửi";
     } else if (diffInSeconds < 60) {
       return `${diffInSeconds} giây trước`;
     } else if (diffInSeconds < 3600) {
@@ -175,7 +177,7 @@ export const ChatPageIn = ({ friendInbox }) => {
   // console.log("messagesmessagesmessages", messages);
 
   return (
-    <div className="chat-in-container">
+    <div className={`chat-in-container ${isExpanded ? "expanded" : ""}`}>
       <div className="chat-header">
         <img
           src={friendInbox.avatar}
@@ -186,8 +188,25 @@ export const ChatPageIn = ({ friendInbox }) => {
           <div className="chat-header-name">{friendInbox.name}</div>
           <div className="chat-header-status">Đang hoạt động</div>
         </div>
-        <div className="chat-header-clone">
-          <IoMdClose />
+        <div
+          style={{
+            display: "flex",
+            right: 0,
+            alignItems: "center",
+            position: "absolute",
+          }}
+        >
+          <div
+            className="chat-header-down"
+            onClick={() => {
+              setIsExpanded(!isExpanded);
+            }}
+          >
+            <GoDash />
+          </div>
+          <div className="chat-header-clone">
+            <IoMdClose />
+          </div>
         </div>
       </div>
       <div className="chat-messages">

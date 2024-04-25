@@ -3,6 +3,11 @@
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.friend-item:hover {
+  background-color: rgb(210, 210, 210);
 }
 
 .friend-avatar {
@@ -20,4 +25,29 @@
   margin-left: auto;
   cursor: pointer;
   font-size: 25px;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.friend-item.selected {
+  background-color: #ccc;
+}
+
+.friend-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
 }

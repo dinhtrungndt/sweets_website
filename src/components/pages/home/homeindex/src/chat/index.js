@@ -37,18 +37,16 @@ export const ChatPage = ({ cancel, friend }) => {
   return (
     <div>
       {loading ? (
-        <div>Loading...</div>
+        <div className="friend-item">Loading...</div>
       ) : listFriend.length > 0 ? (
         listFriend.map((friend, index) => (
-          <div key={index} className="friend-item">
+          <div
+            key={index}
+            className="friend-item"
+            onClick={() => handleMessengerClick(friend)}
+          >
             <img src={friend.avatar} alt="Avatar" className="friend-avatar" />
             <div className="friend-name">{friend.name}</div>
-            <div
-              className="messenger-icon"
-              onClick={() => handleMessengerClick(friend)}
-            >
-              <BiSolidMessageRoundedAdd />
-            </div>
           </div>
         ))
       ) : (
