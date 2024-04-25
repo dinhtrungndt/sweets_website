@@ -4,22 +4,15 @@ import "../../css/cssChat.css";
 import { BiSolidMessageRoundedAdd } from "react-icons/bi";
 
 export const ChatPage = ({ cancel, friend }) => {
-  const getUserFromLocalStorage = () => {
-    const userString = localStorage.getItem("iduser");
-    if (userString) {
-      return JSON.parse(userString);
-    }
-    return null;
-  };
-
-  const user = getUserFromLocalStorage();
+  const userString = localStorage.getItem("iduser");
+  const user = JSON.parse(userString);
   const [listFriend, setListFriend] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const onGetFriend = async () => {
     try {
-      if (user && user._id) {
-        const response = await getFriendByIdUsers(user._id);
+      if (user) {
+        const response = await getFriendByIdUsers(user);
         // console.log("Lấy danh sách bạn bè thành công");
         setListFriend(response.friendsList);
       }
@@ -30,10 +23,11 @@ export const ChatPage = ({ cancel, friend }) => {
     }
   };
 
+  // console.log(">>>>>>>>>> idFriend", listFriend);
   const handleMessengerClick = (idFriend) => {
     // console.log(">>>>>>>>>> idFriend", idFriend);
     friend(idFriend);
-    cancel();
+    // cancel();
   };
 
   useEffect(() => {

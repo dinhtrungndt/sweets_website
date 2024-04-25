@@ -37,6 +37,7 @@ import { FaFacebookMessenger } from "react-icons/fa";
 import { Modal } from "antd";
 import { ChatPage } from "./chat";
 import { ChatPageIn } from "./chat/ChatPageIn";
+import { getUserByID } from "../../../../../services/pages/userServices";
 
 export const HomeScreen1 = (props) => {
   // const { userId } = props;
@@ -330,15 +331,31 @@ export const HomeScreen1 = (props) => {
     window.location.href = "/";
   };
 
-  const [openModelMess, setOpenModelMess] = useState(false);
+  // const [openModelMess, setOpenModelMess] = useState(false);
   const [friendInbox, setFriendInbox] = useState(null);
 
-  const handleOk = () => {
-    setOpenModelMess(false);
+  // const handleOk = () => {
+  //   setOpenModelMess(false);
+  // };
+  // const handleCancel = () => {
+  //   setOpenModelMess(false);
+  // };
+
+  const [userA, setUserA] = useState(null);
+
+  const onGetByUserId = async () => {
+    try {
+      const response = await getUserByID(user);
+      // console.log("response", response);
+      setUserA(response);
+    } catch (error) {
+      console.error("Lỗi:", error);
+    }
   };
-  const handleCancel = () => {
-    setOpenModelMess(false);
-  };
+
+  useEffect(() => {
+    onGetByUserId();
+  }, []);
 
   return (
     <div className="container">
@@ -381,28 +398,35 @@ export const HomeScreen1 = (props) => {
             </div>
             <div className="right-side-footer">
               <div className="post-header1">
-                <img src={avatar} alt="Avatar" className="avatar" />
+                <img src={userA.avatar} alt="Avatar" className="avatar" />
                 <div>
-                  <div className="username1">Ngày sinh</div>
-                  <div className="username">Nguyễn Hữu Dũng</div>
+                  <div className="username1">
+                    {userA.date
+                      ? moment(userA.dateOfBirth).format("DD/MM/YYYY")
+                      : ""}
+                  </div>
+                  <div className="username">{userA.name}</div>
                 </div>
                 <div className="chuyentaikhoan">Chuyển</div>
               </div>
-              <div className="friend">Danh sách bạn bè gần đây</div>
-              <div className="list-view-friend">
-                {friend.map((friend, index) => (
-                  <Friend key={index} friend={friend} />
-                ))}
+              <div className="friend">Danh sách bạn bè </div>
+              <div className="list-chat">
+                <ChatPage
+                  // cancel={() => setOpenModelMess(false)}
+                  friend={(idFriend) => {
+                    setFriendInbox(idFriend);
+                  }}
+                />
               </div>
             </div>
           </>
         )}
       </div>
-      <div className="floating-button" onClick={() => setOpenModelMess(true)}>
+      {/* <div className="floating-button" onClick={() => setOpenModelMess(true)}>
         <FaFacebookMessenger className="icon-floating-button" />
-      </div>
+      </div> */}
       {friendInbox === null ? <></> : <ChatPageIn friendInbox={friendInbox} />}
-      <>
+      {/* <>
         <Modal
           open={openModelMess}
           onOk={handleOk}
@@ -418,7 +442,7 @@ export const HomeScreen1 = (props) => {
             }}
           />
         </Modal>
-      </>
+      </> */}
     </div>
   );
 };

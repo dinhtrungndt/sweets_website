@@ -1,4 +1,4 @@
-// ChatPageIn.js
+// ChatPageIn2.js
 import React, { useEffect, useRef, useState } from "react";
 import "../../css/chatin.css";
 import { IoCloseCircleOutline } from "react-icons/io5";
@@ -8,7 +8,7 @@ import io from "socket.io-client";
 import { getUserByID } from "../../../../../../services/pages/userServices";
 import moment from "moment";
 
-export const ChatPageIn = ({ friendInbox }) => {
+export const ChatPageIn2 = ({ friendInbox }) => {
   const userString = localStorage.getItem("iduser");
   const user = JSON.parse(userString);
   const [messageInput, setMessageInput] = useState("");
@@ -175,7 +175,7 @@ export const ChatPageIn = ({ friendInbox }) => {
   // console.log("messagesmessagesmessages", messages);
 
   return (
-    <div className="chat-in-container">
+    <div className="chat-in-container2">
       <div className="chat-header">
         <img
           src={friendInbox.avatar}
