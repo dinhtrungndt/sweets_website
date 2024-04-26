@@ -176,7 +176,7 @@ export const HomeScreen = () => {
   return (
     <div className="container">
       <div className="left-side">
-        <div className="textlogo">Sweet</div>
+        <div className="textlogo">Sweets</div>
         <div className="item1" onClick={search}>
           <HomeFilled style={{ fontSize: "25px", color: "black" }} />
           <div className="txttrangchu">Trang chủ</div>

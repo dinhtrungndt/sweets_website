@@ -1,0 +1,50 @@
+.search-header {
+  width: 70%;
+  align-items: center;
+  padding: 10px;
+}
+.search-container {
+  width: 80%;
+  padding: 8px;
+  margin: 21px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-container::placeholder {
+  color: #999;
+}
+
+.search-button {
+  background-color: #22b6c0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #0b828a;
+}
+
+.search-people {
+  font-size: 16px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.search-item {
+  height: 22px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.search-item:hover {
+  background-color: #a1a1a1;
+  cursor: pointer;
+}

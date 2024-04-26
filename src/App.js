@@ -17,6 +17,7 @@ import { HomeScreen1 } from "./components/pages/home/homeindex/src";
 import Register from "./components/pages/login/register";
 import { ShowStory } from "./components/pages/home/story/showStory";
 import { ToastContainer } from "react-toastify";
+import { SearchPage } from "./components/pages/home/homeindex/src/search";
 
 function App() {
   // đọc thông tin user từ localStorage
@@ -79,10 +80,11 @@ function App() {
           <Route path="/posts" element={<HomeScreen1 />} />
           <Route path="/posts/detail/:id" element={<DetailScreen />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </Router>
       {/* <QRCodeGenerator /> */}
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 }

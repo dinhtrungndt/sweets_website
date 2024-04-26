@@ -15,8 +15,8 @@ import "./index.css";
 import Icon from "@ant-design/icons/lib/components/Icon";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import { login } from "../../../services/users/userServices";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { toastConfig } from "react-simple-toasts";
+import "react-simple-toasts/dist/theme/dark.css";
 
 function QRCodeGenerator(props) {
   const { saveUser } = props;
@@ -27,6 +27,7 @@ function QRCodeGenerator(props) {
   const socket = useRef(null);
   const onCreateDeviceCalled = useRef(false);
   const [showPassword, setShowPassword] = useState(false);
+  toastConfig({ theme: "dark" });
   const handleDateTimeChange = (event) => {
     setDateTime(new Date(event.target.value));
   };
@@ -46,15 +47,7 @@ function QRCodeGenerator(props) {
       //   alert("Email or password is incorrect");
       // }
       // Toast thông báo đăng nhập thành công
-      toast.success("Đăng nhập thành công", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast("Đăng nhập thành công ! ✨", "success", "top-right", 3000);
     } else {
       alert("Đăng nhập thất bại");
     }
@@ -81,15 +74,7 @@ function QRCodeGenerator(props) {
           localStorage.setItem("iduser", dataUser);
           navigate("/posts");
           // Toast thông báo đăng nhập thành công
-          toast.success("Đăng nhập thành công", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          toast("Đăng nhập thành công ! 🤳🎉✨", "success", "top-right", 3000);
         }
       };
       CheckDeviceUpdate();
@@ -182,7 +167,6 @@ function QRCodeGenerator(props) {
           <div className="txtqr">để quét mã QR để đăng nhập</div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 }

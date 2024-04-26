@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import "./css/story.css";
 import { Button, Modal } from "antd";
@@ -7,6 +7,7 @@ import ReactPlayer from "react-player";
 import Slider from "react-slick";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getUserByID } from "../../../../services/pages/userServices";
 
 const RenderItemStory = ({ story, currentuser }) => {
   const [seenStory, setSeenStory] = useState(false);
@@ -109,10 +110,23 @@ const RenderItemStory = ({ story, currentuser }) => {
   );
 };
 
-const StoryPage = ({ story, user }) => {
+const StoryPage = ({ story, userA }) => {
   const navigate = useNavigate();
   const [seenStory, setSeenStory] = useState(false);
   const [modelSelectFeeingStory, setModelSelectFeeingStory] = useState(false);
+  const [user, setUser] = useState(userA);
+
+  const onGetByUserId = async () => {
+    try {
+      const response = await getUserByID(userA);
+      // console.log("response", response);
+      setUser(response);
+    } catch (error) {
+      console.error("Lỗi:", error);
+    }
+  };
+
+  // console.log(">>>>>>>>------------- user", user);
 
   const handleOk = () => {
     setModelSelectFeeingStory(false);
@@ -186,11 +200,15 @@ const StoryPage = ({ story, user }) => {
     });
   };
 
+  useEffect(() => {
+    onGetByUserId();
+  }, []);
+
   return (
     <div className="T">
       <div className="container_story_me">
         <div className="container_me">
-          {userStories.length !== 0 ? (
+          {userStories.length !== 0 && !isMyStoryExpired ? (
             <div
               onClick={
                 showStoryMe && !isMyStoryExpired

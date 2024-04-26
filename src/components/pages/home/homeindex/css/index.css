@@ -18,6 +18,7 @@
   margin-right: 20px;
   width: 80%;
   overflow-y: auto;
+  display: flex;
 }
 
 .textlogo {
@@ -194,8 +195,10 @@
 }
 
 .comment {
-  display: flex;
   margin-bottom: 15px;
+  position: relative;
+  display: flex;
+  border-bottom: 1px solid #ddd;
 }
 
 .comment-avatar {
@@ -223,14 +226,35 @@
 .comment-text {
   color: #333;
 }
-
+.comment-C-CC {
+  display: flex;
+}
 .child-comment {
-  margin-left: 20px;
-  font-size: 0.8em;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  flex-direction: column;
+}
+
+.child-comment-column {
+  display: flex;
+  flex-direction: column;
 }
 
 .child-comment-container {
   margin-left: 20px;
+}
+
+.child-commentCC {
+  margin-left: 30px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+
+.comment-send {
+  margin-bottom: 100px;
 }
 
 .flex_reactionsLink {
@@ -344,6 +368,7 @@
 
 .comment-phanhoi {
   margin-top: 20px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
 }

@@ -40,6 +40,9 @@ import { AiOutlineLike } from "react-icons/ai";
 import { RiShareForwardLine } from "react-icons/ri";
 import toast, { toastConfig } from "react-simple-toasts";
 import "react-simple-toasts/dist/theme/dark.css";
+import { ChatPage } from "./homeindex/src/chat";
+import { ChatPageIn } from "./homeindex/src/chat/ChatPageIn";
+import { getUserByID } from "../../../services/pages/userServices";
 
 export const DetailScreen = () => {
   const { id } = useParams();
@@ -62,6 +65,7 @@ export const DetailScreen = () => {
   const [parentUserName, setParentUserName] = useState(null);
   const postID = post.map((post) => post._id).join();
   const commentInputRef = useRef(null);
+  const [friendInbox, setFriendInbox] = useState(null);
   // console.log(">>>>>>>>>>>>>>> postID", id);
 
   const onGetPosts = async () => {
@@ -149,63 +153,27 @@ export const DetailScreen = () => {
     }
   };
 
-  useEffect(() => {
-    onGetPosts();
-  }, []);
+  const [userA, setUserA] = useState(null);
+
+  const onGetByUserId = async () => {
+    try {
+      const response = await getUserByID(user);
+      // console.log("response", response);
+      setUserA(response);
+    } catch (error) {
+      console.error("Lỗi:", error);
+    }
+  };
 
   useEffect(() => {
+    onGetByUserId();
+    onGetPosts();
     reloadComments();
   }, []);
 
   const handleReply = (id, name) => {
     setParentId(id);
     setParentUserName(name);
-  };
-
-  const renderComments = (comment) => {
-    return (
-      <>
-        {comment.map((comment, index) => (
-          <div
-            key={index}
-            className={`comment ${comment.idParent ? "child-comment" : ""}`}
-          >
-            <img
-              src={comment.idUsers.avatar}
-              alt="Avatar"
-              className={`avatar ${comment.idParent ? "child-comment" : ""}`}
-            />
-            <div className="comment-content">
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <div className="username">{comment.idUsers.name}</div>
-                <div style={{ paddingLeft: 10, fontSize: 14 }}>
-                  {formatTime(comment.createAt)}{" "}
-                </div>
-              </div>
-              <div className="comment-text">{comment.content}</div>
-              {comment.idParent === null ? (
-                <>
-                  <div
-                    className="comment-phanhoi"
-                    onClick={() => handleReply(comment?._id, comment?.idUsers)}
-                  >
-                    Phản hồi
-                  </div>
-                </>
-              ) : (
-                <div
-                  className="comment-phanhoi"
-                  onClick={() => handleReply(comment?._id, comment?.idUsers)}
-                >
-                  Phản hồi
-                </div>
-              )}
-            </div>
-            {comment.subComments && renderComments(comment.subComments)}
-          </div>
-        ))}
-      </>
-    );
   };
 
   const formatTime = (createdAt) => {
@@ -230,30 +198,6 @@ export const DetailScreen = () => {
     }
   };
 
-  const friend = [
-    {
-      avatar: avatar,
-      username: "Mang Tuấn Vĩ",
-      date: "12/12/2000",
-    },
-    {
-      avatar: avatar,
-      username: "Nguyễn Đình Trứng",
-      date: "12/12/2000",
-    },
-  ];
-
-  const Friend = ({ friend }) => {
-    return (
-      <div className="post-header1">
-        <img src={friend.avatar} alt="Avatar" className="avatar" />
-        <div>
-          <div className="username">{friend.username}</div>
-          <div className="username1">{friend.date}</div>
-        </div>
-      </div>
-    );
-  };
   const search = () => {
     alert("Chức năng đang được phát triển");
   };
@@ -315,13 +259,156 @@ export const DetailScreen = () => {
     }
   };
 
+  const renderComments = (comment) => {
+    return (
+      <>
+        {comment.map((comment, index) => (
+          <>
+            {comment.idParent === null ? (
+              <div
+                key={index}
+                className={`comment ${comment.idParent ? "child-comment" : ""}`}
+              >
+                <>
+                  <img
+                    src={comment.idUsers.avatar}
+                    alt="Avatar"
+                    className={`avatar ${
+                      comment.idParent ? "child-comment" : ""
+                    }`}
+                  />
+                  <div className="comment-content">
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <div className="username">{comment.idUsers.name}</div>
+                      <div style={{ paddingLeft: 10, fontSize: 14 }}>
+                        {formatTime(comment.createAt)}{" "}
+                      </div>
+                    </div>
+                    <div className="comment-text">{comment.content}</div>
+                    <div
+                      className="comment-phanhoi"
+                      onClick={() =>
+                        handleReply(comment?._id, comment?.idUsers)
+                      }
+                    >
+                      Phản hồi
+                    </div>
+                    <div className="comment-replyCC">
+                      {comments
+                        .filter(
+                          (c) => c.idParent && c.idParent._id === comment._id
+                        )
+                        .map((subComment, index) => (
+                          <div className="comment-C-CC">
+                            <img
+                              src={subComment.idUsers.avatar}
+                              alt="Avatar"
+                              className="avatar child-comment"
+                            />
+                            <div key={index} className="child-comment">
+                              <div className="comment-content">
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <div className="username">
+                                    {subComment.idUsers.name}
+                                  </div>
+                                  <div
+                                    style={{ paddingLeft: 10, fontSize: 14 }}
+                                  >
+                                    {formatTime(subComment.createAt)}{" "}
+                                  </div>
+                                </div>
+                                <div className="comment-text">
+                                  {subComment.content}
+                                </div>
+                                <div
+                                  className="comment-phanhoi"
+                                  onClick={() =>
+                                    handleReply(
+                                      subComment._id,
+                                      subComment.idUsers
+                                    )
+                                  }
+                                >
+                                  Phản hồi
+                                </div>
+                              </div>
+                              {comments
+                                .filter(
+                                  (c) =>
+                                    c.idParent &&
+                                    c.idParent._id === subComment._id
+                                )
+                                .map((subCommentCC, index) => (
+                                  <div key={index} className=" child-commentCC">
+                                    <img
+                                      src={subCommentCC.idUsers.avatar}
+                                      alt="Avatar"
+                                      className="avatar child-comment"
+                                    />
+                                    <div className="comment-content">
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <div className="username">
+                                          {subCommentCC.idUsers.name}
+                                        </div>
+                                        <div
+                                          style={{
+                                            paddingLeft: 10,
+                                            fontSize: 14,
+                                          }}
+                                        >
+                                          {formatTime(subCommentCC.createAt)}{" "}
+                                        </div>
+                                      </div>
+                                      <div className="comment-text">
+                                        {subCommentCC.content}
+                                      </div>
+                                      <div
+                                        className="comment-phanhoi"
+                                        onClick={() =>
+                                          handleReply(
+                                            subComment._id,
+                                            subComment.idUsers
+                                          )
+                                        }
+                                      >
+                                        Phản hồi
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </>
+              </div>
+            ) : (
+              <></>
+            )}
+          </>
+        ))}
+      </>
+    );
+  };
+
   return (
     <>
       {post.map((post, index) => {
         return (
           <div key={index} className="container">
             <div className="left-side">
-              <div className="textlogo">Sweet</div>
+              <div className="textlogo">Sweets</div>
               <div className="item1" onClick={handleIndex}>
                 <HomeFilled className="icon" />
                 <div className="txttrangchu">Trang chủ</div>
@@ -360,7 +447,7 @@ export const DetailScreen = () => {
                   />
                   <div>
                     <div className="username">{post?.idUsers?.name}</div>
-                    <div className="time">{formatTime(post?.createdAt)}</div>
+                    <div className="time">{formatTime(post?.createAt)}</div>
                   </div>
                 </div>
                 <div className="post-description">{post?.content}</div>
@@ -437,33 +524,38 @@ export const DetailScreen = () => {
                   </div>
                 </div>
                 <div className="comments-section">
-                  <div>
-                    {renderComments(
-                      post.comment.filter((comment) => !comment.parentId)
-                    )}
-                  </div>
+                  {renderComments(
+                    post.comment.filter((comment) => !comment.parentId)
+                  )}
                 </div>
-                <div className="new-comment-container">
-                  {parentUserName !== null ? (
-                    <div className="onClick-parent">
-                      <Button onClick={() => setParentUserName(null)}>X</Button>
-                      <p className="parentUserName">{parentUserName.name}</p>
-                    </div>
-                  ) : null}
-                  <input
-                    type="text"
-                    ref={commentInputRef}
-                    onChange={(event) => setCommentContent(event.target.value)}
-                    placeholder={`Bình luận`}
-                    className="new-comment-input"
-                  />
+                <div className="comment-send">
+                  <div className="new-comment-container">
+                    {parentUserName !== null ? (
+                      <div className="onClick-parent">
+                        <Button onClick={() => setParentUserName(null)}>
+                          X
+                        </Button>
+                        <p className="parentUserName">{parentUserName.name}</p>
+                      </div>
+                    ) : null}
 
-                  <button
-                    onClick={submitComment}
-                    className="submit-comment-button"
-                  >
-                    Bình luận
-                  </button>
+                    <input
+                      type="text"
+                      ref={commentInputRef}
+                      onChange={(event) =>
+                        setCommentContent(event.target.value)
+                      }
+                      placeholder={`Bình luận`}
+                      className="new-comment-input"
+                    />
+
+                    <button
+                      onClick={submitComment}
+                      className="submit-comment-button"
+                    >
+                      Bình luận
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -472,23 +564,31 @@ export const DetailScreen = () => {
             </div>
             <div className="right-side-footer">
               <div className="post-header1">
-                <img src={avatar} alt="Avatar" className="avatar" />
+                <img src={userA.avatar} alt="Avatar" className="avatar" />
                 <div>
-                  <div className="username1">Ngày sinh</div>
-                  <div className="username">Nguyễn Hữu Dũng</div>
+                  <div className="username1">
+                    {userA.date
+                      ? moment(userA.dateOfBirth).format("DD/MM/YYYY")
+                      : ""}
+                  </div>
+                  <div className="username">{userA.name}</div>
                 </div>
                 <div className="chuyentaikhoan">Chuyển</div>
               </div>
-              <div className="friend">Danh sách bạn bè gần đây</div>
-              <div className="list-view-friend">
-                {friend.map((friend, index) => (
-                  <Friend key={index} friend={friend} />
-                ))}
+              <div className="friend">Danh sách bạn bè </div>
+              <div className="list-chat">
+                <ChatPage
+                  // cancel={() => setOpenModelMess(false)}
+                  friend={(idFriend) => {
+                    setFriendInbox(idFriend);
+                  }}
+                />
               </div>
             </div>
           </div>
         );
       })}
+      {friendInbox === null ? <></> : <ChatPageIn friendInbox={friendInbox} />}
     </>
   );
 };

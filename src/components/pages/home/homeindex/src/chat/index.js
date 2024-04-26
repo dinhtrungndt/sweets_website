@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getFriendByIdUsers } from "../../../../../../services/pages/friendServices";
 import "../../css/cssChat.css";
 import { BiSolidMessageRoundedAdd } from "react-icons/bi";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export const ChatPage = ({ cancel, friend }) => {
   const userString = localStorage.getItem("iduser");
@@ -37,7 +38,10 @@ export const ChatPage = ({ cancel, friend }) => {
   return (
     <div>
       {loading ? (
-        <div className="friend-item">Loading...</div>
+        <div className="friend-item">
+          <LoadingOutlined className="loading-icon" />
+          Loading...
+        </div>
       ) : listFriend.length > 0 ? (
         listFriend.map((friend, index) => (
           <div
