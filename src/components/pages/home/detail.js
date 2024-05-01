@@ -377,7 +377,7 @@ export const DetailScreen = () => {
                                         onClick={() =>
                                           handleReply(
                                             subComment._id,
-                                            subComment.idUsers
+                                            subCommentCC.idUsers
                                           )
                                         }
                                       >
