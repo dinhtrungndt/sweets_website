@@ -281,7 +281,7 @@ const StoryPage = ({ story, userA }) => {
               dots={true}
               arrows={false}
             >
-              {story.map((item, index) => (
+              {userStories.map((item, index) => (
                 <div key={index}>
                   {item.media.length !== 0 ? (
                     <>
