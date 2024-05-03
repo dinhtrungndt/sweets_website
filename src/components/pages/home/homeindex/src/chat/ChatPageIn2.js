@@ -34,7 +34,7 @@ export const ChatPageIn2 = ({ friendInbox }) => {
   }, [messages]);
 
   useEffect(() => {
-    socket.current = io("https://sweets-nodejs.onrender.com/");
+    socket.current = io("https://api.dinhtrungndt.id.vn/");
     let isConnected = false;
 
     const handleConnect = () => {
