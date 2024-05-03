@@ -54,7 +54,7 @@ function QRCodeGenerator(props) {
   };
 
   useEffect(() => {
-    socket.current = io("https://sweets-nodejs.onrender.com/");
+    socket.current = io("https://api.dinhtrungndt.id.vn/");
     socket.current.on("connect", () => {
       console.log("Connected to server");
     });
